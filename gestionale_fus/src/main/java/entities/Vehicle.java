@@ -28,7 +28,7 @@ public abstract class Vehicle {
 	@Enumerated(EnumType.STRING)
 	private VehicleType type;
 	
-	@OneToMany
+	//@OneToMany
 	private Set<Daily> daily;
 		
 	private int capacity;
