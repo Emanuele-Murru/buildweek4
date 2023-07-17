@@ -50,7 +50,10 @@ public class AutoResellerDAO {
 			EntityTransaction entityTransaction = entityManager.getTransaction();
 			entityTransaction.begin();
 
-			Query query = entityManager.createQuery("").setParameter("_status", _status);
+			Query query = entityManager.createQuery("UPDATE AutoReseller a SET a.status = :_status WHERE a.id = :_id")
+					.setParameter("_status", _status);
+
+			int updatedStatus = query.executeUpdate();
 
 			entityTransaction.commit();
 			System.out.println("Lo stato del distributore automatico è stato aggiornato con successo");
