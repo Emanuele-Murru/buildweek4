@@ -19,7 +19,7 @@ public class AutoResellerDAO {
 		entityTransaction.begin();
 		entityManager.persist(_autoReseller);
 		entityTransaction.commit();
-		System.out.println("Distributore automatico salvato correttamente");
+		System.out.println("Distributore automatico salvato con successo");
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - findById
@@ -36,6 +36,21 @@ public class AutoResellerDAO {
 			entityTransaction.begin();
 			entityManager.remove(desiredAutoReseller);
 			entityTransaction.commit();
+
+		} else {
+			System.out.println("Distributore automatico non trovato");
+		}
+	}
+
+	// - - - - - - - - - - - - - - - - - - - - changeStatus
+	public void changeStatus(long _id) {
+		AutoReseller desiredAutoReseller = entityManager.find(AutoReseller.class, _id);
+		if (desiredAutoReseller != null) {
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			entityManager.remove(desiredAutoReseller);
+			entityTransaction.commit();
+			System.out.println("Lo stato del distributore automatico è stato aggiornato con successo");
 
 		} else {
 			System.out.println("Distributore automatico non trovato");
