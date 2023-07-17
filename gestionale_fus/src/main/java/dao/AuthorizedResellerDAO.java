@@ -13,6 +13,7 @@ public class AuthorizedResellerDAO {
 		this.entityManager = _entityManager;
 	}
 
+	// - - - - - - - - - - - - - - - - - - - - save
 	public void save(AuthorizedReseller _authorizedReseller) {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
@@ -21,11 +22,13 @@ public class AuthorizedResellerDAO {
 		System.out.println("Rivenditore autorizzato salvato correttamente");
 	}
 
+	// - - - - - - - - - - - - - - - - - - - - findById
 	public AuthorizedReseller findById(long _id) {
 		AuthorizedReseller desiredAuthorizedReseller = entityManager.find(AuthorizedReseller.class, _id);
 		return desiredAuthorizedReseller;
 	}
 
+	// - - - - - - - - - - - - - - - - - - - - findByIdAndDelete
 	public void findByIdAndDelete(long _id) {
 		AuthorizedReseller desiredAuthorizedReseller = entityManager.find(AuthorizedReseller.class, _id);
 		if (desiredAuthorizedReseller != null) {
