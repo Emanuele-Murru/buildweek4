@@ -18,24 +18,24 @@ public class AutoResellerDAO {
 		entityTransaction.begin();
 		entityManager.persist(_autoReseller);
 		entityTransaction.commit();
-		System.out.println("AutoReseller saved");
+		System.out.println("Distributore automatico salvato correttamente");
 	}
 
 	public AutoReseller findById(long _id) {
-		AutoReseller autoResellerCercato = entityManager.find(AutoReseller.class, _id);
-		return autoResellerCercato;
+		AutoReseller desiredAutoResellerCercato = entityManager.find(AutoReseller.class, _id);
+		return desiredAutoResellerCercato;
 	}
 
 	public void findByIdAndDelete(long _id) {
-		AutoReseller autoResellerCercato = entityManager.find(AutoReseller.class, _id);
-		if (autoResellerCercato != null) {
+		AutoReseller desiredAutoResellerCercato = entityManager.find(AutoReseller.class, _id);
+		if (desiredAutoResellerCercato != null) {
 			EntityTransaction entityTransaction = entityManager.getTransaction();
 			entityTransaction.begin();
-			entityManager.remove(autoResellerCercato);
+			entityManager.remove(desiredAutoResellerCercato);
 			entityTransaction.commit();
 
 		} else {
-			System.out.println("AutoReseller not found");
+			System.out.println("Distributore automatico non trovato");
 		}
 	}
 }
