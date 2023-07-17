@@ -2,6 +2,7 @@ package dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import entities.AutoReseller;
 
@@ -43,12 +44,14 @@ public class AutoResellerDAO {
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - changeStatus
-	public void changeStatus(long _id) {
+	public void changeStatus(long _id, String _status) {
 		AutoReseller desiredAutoReseller = entityManager.find(AutoReseller.class, _id);
 		if (desiredAutoReseller != null) {
 			EntityTransaction entityTransaction = entityManager.getTransaction();
 			entityTransaction.begin();
-			entityManager.remove(desiredAutoReseller);
+
+			Query query = entityManager.createQuery("").setParameter("_status", _status);
+
 			entityTransaction.commit();
 			System.out.println("Lo stato del distributore automatico è stato aggiornato con successo");
 
