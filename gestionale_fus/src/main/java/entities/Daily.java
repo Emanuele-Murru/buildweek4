@@ -1,5 +1,5 @@
 package entities;
 
-public class Daily extends TicketOffice{
+public class Daily extends Ticket{
 
 }
