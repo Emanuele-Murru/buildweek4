@@ -24,17 +24,17 @@ public class AutoResellerDAO {
 
 	// - - - - - - - - - - - - - - - - - - - - findById
 	public AutoReseller findById(long _id) {
-		AutoReseller desiredAutoResellerCercato = entityManager.find(AutoReseller.class, _id);
-		return desiredAutoResellerCercato;
+		AutoReseller desiredAutoReseller = entityManager.find(AutoReseller.class, _id);
+		return desiredAutoReseller;
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - findByIdAndDelete
 	public void findByIdAndDelete(long _id) {
-		AutoReseller desiredAutoResellerCercato = entityManager.find(AutoReseller.class, _id);
-		if (desiredAutoResellerCercato != null) {
+		AutoReseller desiredAutoReseller = entityManager.find(AutoReseller.class, _id);
+		if (desiredAutoReseller != null) {
 			EntityTransaction entityTransaction = entityManager.getTransaction();
 			entityTransaction.begin();
-			entityManager.remove(desiredAutoResellerCercato);
+			entityManager.remove(desiredAutoReseller);
 			entityTransaction.commit();
 
 		} else {
