@@ -19,7 +19,7 @@ public class VehicleDAO {
 	public VehicleDAO(EntityManager em) {this.em = em;}
 	
 	// save vehicle
-	public void saveVehcile(Vehicle vehicle) {
+	public void saveVehicle(Vehicle vehicle) {
 		
 		EntityTransaction t = em.getTransaction();
 

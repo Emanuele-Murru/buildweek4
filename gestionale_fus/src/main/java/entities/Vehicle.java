@@ -32,8 +32,6 @@ public abstract class Vehicle {
 	private Set<Daily> daily;
 		
 	private int capacity;
-	
-
 	private Route route = null;
 	
 	
