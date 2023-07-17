@@ -31,7 +31,6 @@ public abstract class Vehicle {
 	private Route route = null;
 	
 	
-	
 	public Vehicle(VehicleType type) {
 		this.capacity = (type.equals(VehicleType.Bus)) ? 30 : 50;
 		this.type = type;
