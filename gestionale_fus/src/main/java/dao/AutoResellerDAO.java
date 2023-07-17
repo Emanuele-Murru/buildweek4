@@ -13,6 +13,7 @@ public class AutoResellerDAO {
 		this.entityManager = _entityManager;
 	}
 
+	// - - - - - - - - - - - - - - - - - - - - save
 	public void save(AutoReseller _autoReseller) {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
@@ -21,11 +22,13 @@ public class AutoResellerDAO {
 		System.out.println("Distributore automatico salvato correttamente");
 	}
 
+	// - - - - - - - - - - - - - - - - - - - - findById
 	public AutoReseller findById(long _id) {
 		AutoReseller desiredAutoResellerCercato = entityManager.find(AutoReseller.class, _id);
 		return desiredAutoResellerCercato;
 	}
 
+	// - - - - - - - - - - - - - - - - - - - - findByIdAndDelete
 	public void findByIdAndDelete(long _id) {
 		AutoReseller desiredAutoResellerCercato = entityManager.find(AutoReseller.class, _id);
 		if (desiredAutoResellerCercato != null) {
