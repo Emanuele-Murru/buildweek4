@@ -1,6 +1,10 @@
 package dao;
 
+import java.time.LocalDate;
+
 import javax.persistence.EntityManager;
+
+import entities.Reseller;
 
 public class ResellerDAO {
 
@@ -8,6 +12,10 @@ public class ResellerDAO {
 
 	public ResellerDAO(EntityManager _entityManager) {
 		this.entityManager = _entityManager;
+	}
+
+	public list<Ticket> getResellerTicketsByTime(Reseller _reseller, LocalDate _startDate, LocalDate _endDate) {
+
 	}
 
 }
