@@ -21,19 +21,19 @@ public abstract class Ticket {
 
 	@Id
 	@GeneratedValue
-	private Long ticketId;
+	private long id;
 	private LocalDate issueDate;
 	private Reseller reseller;
 
 	public Ticket(Long _ticketId, LocalDate _issueDate, Reseller _reseller) {
-		this.ticketId = _ticketId;
+		this.id = _ticketId;
 		this.issueDate = _issueDate;
 		this.reseller = _reseller;
 	}
 	
 	@Override
 	public String toString() {
-		return "Ticket [ID Biglietto =" + ticketId + ", data di emissione =" + issueDate + ", Rivenditore = " + reseller;
+		return "Ticket [ID Biglietto =" + id + ", data di emissione =" + issueDate + ", Rivenditore = " + reseller;
 	}
 	
 }
