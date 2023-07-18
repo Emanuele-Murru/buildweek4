@@ -17,7 +17,7 @@ public class Trip {
 	@Id
 	@GeneratedValue
 	private long id;
-
+	
 	private long idVehicle;
 	
 	private String routeName;
