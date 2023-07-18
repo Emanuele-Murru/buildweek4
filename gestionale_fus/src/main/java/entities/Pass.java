@@ -18,21 +18,24 @@ import lombok.Setter;
 
 public class Pass extends Ticket{
 	
-	private User userId;
+	private User user;
 	@Enumerated(EnumType.STRING)
-	private SubscriptionType subType;
-	private LocalDate expireDateSub;
+	private SubscriptionType subType = null;
+	private LocalDate expireDateSub = null;
 	private LocalDate expiryDatePass; 
 	
-	public Pass(LocalDate _issueDate, Reseller _reseller, User _userId, SubscriptionType _subType, LocalDate _expiryDateSub, LocalDate _expireDatePass) {
-		
+	public Pass(LocalDate _issueDate, Reseller _reseller, User user, LocalDate expiryDatePass) {
 		super(_issueDate, _reseller);
-		this.expireDateSub = _expiryDateSub;
-		this.expiryDatePass = _expireDatePass;
+		this.user = user;
+		this.expiryDatePass = LocalDate.of(_issueDate.getYear(), 12, 31);
 	}
 	
 	@Override
 	public String toString() {
-		return "Ticket [ID Biglietto =" + getId() + ", Data di emissione =" + getIssueDate() + ", Rivenditore = " + getReseller() + "ID User =" + userId + ", Tipo di abbonamento =" + subType + ", Data scadenza abbonamento =" + expireDateSub + ", Data scadenza Tessera =" + expiryDatePass;
+		return "Ticket [ID Biglietto =" + getId() + ", Data di emissione =" + getIssueDate() + ", Rivenditore = " + getReseller() + "ID User =" + user + ", Tipo di abbonamento =" + subType + ", Data scadenza abbonamento =" + expireDateSub + ", Data scadenza Tessera =" + expiryDatePass;
 	}
+
+
+
+	
 }
