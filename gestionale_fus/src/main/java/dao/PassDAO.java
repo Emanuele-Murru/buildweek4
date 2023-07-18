@@ -53,9 +53,9 @@ public class PassDAO {
 				q.executeUpdate();
 
 				t.commit();
-			}
-		}
-		else System.out.println("Tessera non trovata!");
+				System.out.println("Tessera rinnovata con successo!");
+			}else System.out.println("La tessera è ancora valida.");
+		}else System.out.println("Tessera non trovata!");
 	}
 
 	public void renewalPass(User user, SubscriptionType type) {
