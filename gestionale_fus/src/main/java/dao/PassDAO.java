@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import entities.Pass;
 import entities.User;
+import entities.Vehicle;
 import enums.SubscriptionType;
 
 public class PassDAO {
@@ -30,11 +31,11 @@ public class PassDAO {
 	}
 
 	public Pass findPassByUserId(User user) {
-		TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.userId = :user", Pass.class);
+		TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.user.id = :user.id", Pass.class);
 		query.setParameter("user", user);
 		List<Pass> passList = query.getResultList();
 		return passList.isEmpty() ? null : passList.get(0);
-	
+	}
 
 	public void renewalPass(User user, SubscriptionType type) {
 	    Pass pass = findPassByUserId(user);

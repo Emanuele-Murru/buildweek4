@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -26,11 +27,8 @@ public class User {
 	protected String name;
 	protected String surname;
 
-	// @OneToOne // * * * * * * TO HAVE HERE
-	// protected Pass pass;
-
-	// @OneToOne(mappedBy = "pass") // * * * * * * TO HAVE IN PASS
-	// protected User user;
+	@OneToOne
+	protected Pass pass;
 
 	protected LocalDate birthDate;
 	protected String birthPlace;
