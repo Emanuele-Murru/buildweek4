@@ -33,8 +33,7 @@ public class PassDAO {
 	public Pass findPassByUserId(User user) {
 		TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.user.id = :user.id", Pass.class);
 		query.setParameter("user", user);
-		List<Pass> passList = query.getResultList();
-		return passList.isEmpty() ? null : passList.get(0);
+		return query.getSingleResult();
 	}
 
 	public void renewalPass(User user, SubscriptionType type) {
@@ -47,7 +46,7 @@ public class PassDAO {
 
 	        EntityTransaction t = em.getTransaction();
 	        t.begin();
-	        em.merge(pass); // Qui si usa merge e non persist per aggiornare l'entità esistente nel database
+	        em.merge(pass);
 	        t.commit();
 
 	        System.out.println("L'abbonamento è stato rinnovato con successo");
