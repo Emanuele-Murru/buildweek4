@@ -41,11 +41,8 @@ public class VehicleDAO {
 	// * * * * * WORK IN PROGRESS * * * * *
 	public void timbraTicket(Ticket ticket, LocalDate dataTimbratura) {
 
-		if (ticket.getDataTimbratura() != null) {
-			System.out.println("Il biglietto è già stato timbrato.");
-		}
-
-		ticket.setDate(dataTimbratura);
+		if (ticket.getDataTimbratura() != null) System.out.println("Il biglietto è già stato timbrato.");
+		else ticket.setDate(dataTimbratura);
 
 	}
 
