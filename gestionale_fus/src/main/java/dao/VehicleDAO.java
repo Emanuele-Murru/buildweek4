@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import entities.Daily;
 import entities.Route;
+import entities.Ticket;
 import entities.Vehicle;
 import enums.VehicleType;
 
@@ -38,13 +39,13 @@ public class VehicleDAO {
 
 	// * * * * * TIMBRA TICKET * * * * *
 	// * * * * * WORK IN PROGRESS * * * * *
-	public void timbraTicket(Ticket _ticket, LocalDate _dataTimbratura) {
+	public void timbraTicket(Ticket ticket, LocalDate dataTimbratura) {
 
 		if (ticket.getDataTimbratura() != null) {
 			System.out.println("Il biglietto è già stato timbrato.");
 		}
 
-		ticket.setDate(dataTimbratura)
+		ticket.setDate(dataTimbratura);
 
 	}
 
