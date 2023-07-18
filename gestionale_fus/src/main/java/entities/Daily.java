@@ -27,7 +27,7 @@ public class Daily extends Ticket {
 
 	@Override
 	public String toString() {
-		return "Biglietto giornaliero [ID Biglietto =" + getTicketId() + ", Data di emissione =" + getIssueDate()
+		return "Biglietto giornaliero [ID Biglietto =" + getId() + ", Data di emissione =" + getIssueDate()
 				+ ", Rivenditore = " + getReseller() + ", Data obliterazione =" + obliterateDate + "Data di scadenza ="
 				+ expiryDate;
 	}
