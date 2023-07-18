@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entities.Pass;
@@ -27,13 +28,34 @@ public class PassDAO {
 		em.persist(e);
 
 		t.commit();
-		System.out.println("Abbonamento creato/salvato con successo");
+		System.out.println("Tessera creato/salvato con successo");
 	}
 
 	public Pass findPassByUserId(User user) {
 		TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.user.id = :user.id", Pass.class);
 		query.setParameter("user", user);
 		return query.getSingleResult();
+	}
+	
+	public void renewalPass(Pass pass) {
+		if(pass != null) {
+			if(pass.getExpiryDatePass().getYear() != LocalDate.now().getYear()) {
+				
+				long id = pass.getId();
+				LocalDate data = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+				
+				EntityTransaction t = em.getTransaction();
+				t.begin();
+				Query q = em.createQuery("UPDATE Pass p SET expiryDatePass = :expiryDatePass WHERE id = :id");
+				q.setParameter("expiryDatePass", data);
+				q.setParameter("id", id);
+
+				q.executeUpdate();
+
+				t.commit();
+			}
+		}
+		else System.out.println("Tessera non trovata!");
 	}
 
 	public void renewalPass(User user, SubscriptionType type) {

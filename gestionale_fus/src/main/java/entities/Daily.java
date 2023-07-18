@@ -18,11 +18,9 @@ public class Daily extends Ticket {
 	private LocalDate obliterateDate;
 	private LocalDate expiryDate;
 
-	public Daily(Long _ticketId, LocalDate _issueDate, Reseller _reseller, LocalDate _obliterateDate,
-			LocalDate _expiryDate) {
-		super(_ticketId, _issueDate, _reseller);
-		this.obliterateDate = _obliterateDate;
-		this.expiryDate = _expiryDate;
+	public Daily(LocalDate _issueDate, Reseller _reseller, LocalDate expiryDate) {
+		super(_issueDate, _reseller);
+		this.expiryDate = _issueDate.plusDays(2);
 	}
 
 	@Override
@@ -31,5 +29,9 @@ public class Daily extends Ticket {
 				+ ", Rivenditore = " + getReseller() + ", Data obliterazione =" + obliterateDate + "Data di scadenza ="
 				+ expiryDate;
 	}
+
+
+
+	
 
 }
