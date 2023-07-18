@@ -51,7 +51,7 @@ public class VehicleDAO {
 
 				EntityTransaction t = em.getTransaction();
 				t.begin();
-				Query q = em.createQuery("UPDATE Daily d SET d.obliterateDate = :obliterateDate WHERE d.id = :id");
+				Query q = em.createQuery("UPDATE Daily d SET d.expiryDate = :obliterateDate WHERE d.id = :id");
 				q.setParameter("obliterateDate", obliterateDate);
 				q.setParameter("daily.id", daily.getId());
 

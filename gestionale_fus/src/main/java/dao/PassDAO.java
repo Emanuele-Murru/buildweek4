@@ -1,7 +1,6 @@
 package dao;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -10,7 +9,6 @@ import javax.persistence.TypedQuery;
 
 import entities.Pass;
 import entities.User;
-import entities.Vehicle;
 import enums.SubscriptionType;
 
 public class PassDAO {
@@ -36,14 +34,14 @@ public class PassDAO {
 		query.setParameter("user", user);
 		return query.getSingleResult();
 	}
-	
+
 	public void renewalPass(Pass pass) {
-		if(pass != null) {
-			if(pass.getExpiryDatePass().getYear() != LocalDate.now().getYear()) {
-				
+		if (pass != null) {
+			if (pass.getExpiryDatePass().getYear() != LocalDate.now().getYear()) {
+
 				long id = pass.getId();
 				LocalDate data = LocalDate.of(LocalDate.now().getYear(), 12, 31);
-				
+
 				EntityTransaction t = em.getTransaction();
 				t.begin();
 				Query q = em.createQuery("UPDATE Pass p SET expiryDatePass = :expiryDatePass WHERE id = :id");
@@ -54,26 +52,26 @@ public class PassDAO {
 
 				t.commit();
 			}
-		}
-		else System.out.println("Tessera non trovata!");
+		} else
+			System.out.println("Tessera non trovata!");
 	}
 
 	public void renewalPass(User user, SubscriptionType type) {
-	    Pass pass = findPassByUserId(user);
+		Pass pass = findPassByUserId(user);
 
-	    if (pass == null) {
-	        pass = user.getPass();
-	        LocalDate newExpiryDate = pass.getExpiryDatePass().plusMonths(1);
-	        pass.setExpiryDatePass(newExpiryDate);
+		if (pass == null) {
+			pass = user.getPass();
+			LocalDate newExpiryDate = pass.getExpiryDatePass().plusMonths(1);
+			pass.setExpiryDatePass(newExpiryDate);
 
-	        EntityTransaction t = em.getTransaction();
-	        t.begin();
-	        em.merge(pass);
-	        t.commit();
+			EntityTransaction t = em.getTransaction();
+			t.begin();
+			em.merge(pass);
+			t.commit();
 
-	        System.out.println("L'abbonamento è stato rinnovato con successo");
-	    } else {
-	        System.out.println("L'utente non ha ancora un abbonamento");
-	    }
+			System.out.println("L'abbonamento è stato rinnovato con successo");
+		} else {
+			System.out.println("L'utente non ha ancora un abbonamento");
+		}
 	}
 }
