@@ -7,10 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
-import entities.Daily;
 import entities.Route;
 import entities.Ticket;
-import entities.User;
 import entities.Vehicle;
 import enums.VehicleType;
 
@@ -37,23 +35,23 @@ public class VehicleDAO {
 				(vehicle.getType().equals(VehicleType.Bus)) ? "Bus salvato con successo" : "Tram salvato con successo");
 
 	}
-	
+
 	public Vehicle findById(long _id) {
 		Vehicle v = em.find(Vehicle.class, _id);
 		return v;
 	}
 
 	// * * * * * TIMBRA TICKET * * * * *
-	// * * * * * WORK IN PROGRESS * * * * *
 	public void timbraTicket(Ticket ticket, LocalDate dataTimbratura) {
 
-		if (ticket.getDataTimbratura() != null) System.out.println("Il biglietto è già stato timbrato.");
-		else ticket.setDate(dataTimbratura);
+		if (ticket.getDataTimbratura() != null)
+			System.out.println("Il biglietto è già stato timbrato.");
+		else
+			ticket.setDate(dataTimbratura);
 
 	}
 
 	// total obliterated daily ticket
-	// * * * * * WORK IN PROGRESS * * * * *
 	public int obliteratedDaily(Vehicle _vehicle) {
 
 		TypedQuery<Ticket> query = em.createQuery(
@@ -66,7 +64,6 @@ public class VehicleDAO {
 	}
 
 	// daily ticket between dates
-	// * * * * * WORK IN PROGRESS * * * * *
 	public int dailyBetweenDates(Vehicle _vehicle, LocalDate _startDate, LocalDate _endDate) {
 
 		TypedQuery<Ticket> query = em.createQuery(
@@ -82,7 +79,8 @@ public class VehicleDAO {
 
 	// define route
 	public void defineRoute(Vehicle vehicle, Route route) {
-		System.out.println((vehicle.getRoute() == null) ? "Rotta assegnata con successo" : "Rotta modificata con successo");
+		System.out.println(
+				(vehicle.getRoute() == null) ? "Rotta assegnata con successo" : "Rotta modificata con successo");
 		vehicle.setRoute(route);
 	}
 }
