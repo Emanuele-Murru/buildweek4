@@ -30,6 +30,12 @@ public class Trip {
 		this.tripTime = tripTime;
 	}
 
+	@Override
+	public String toString() {
+		return "Trip [id=" + id + ", idVehicle=" + idVehicle + ", routeName=" + routeName + ", tripTime=" + tripTime
+				+ "]";
+	}
+
 	
 	
 	
