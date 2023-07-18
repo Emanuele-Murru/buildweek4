@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import entities.Daily;
 import entities.Route;
 import entities.Ticket;
+import entities.User;
 import entities.Vehicle;
 import enums.VehicleType;
 
@@ -35,6 +36,11 @@ public class VehicleDAO {
 		System.out.println(
 				(vehicle.getType().equals(VehicleType.Bus)) ? "Bus salvato con successo" : "Tram salvato con successo");
 
+	}
+	
+	public Vehicle findById(long _id) {
+		Vehicle v = em.find(Vehicle.class, _id);
+		return v;
 	}
 
 	// * * * * * TIMBRA TICKET * * * * *
