@@ -57,23 +57,29 @@ public class PassDAO {
 		}
 		else System.out.println("Tessera non trovata!");
 	}
+	
+	public void editSubscription(Pass pass, String type, LocalDate data) {
+		String subTypeString = type;
+		SubscriptionType subType = SubscriptionType.valueOf(subTypeString);
+		long id = pass.getId();
+		
+	    EntityTransaction t = em.getTransaction();
 
-	public void renewalPass(User user, SubscriptionType type) {
-	    Pass pass = findPassByUserId(user);
-
-	    if (pass == null) {
-	        pass = user.getPass();
-	        LocalDate newExpiryDate = pass.getExpiryDatePass().plusMonths(1);
-	        pass.setExpiryDatePass(newExpiryDate);
-
-	        EntityTransaction t = em.getTransaction();
-	        t.begin();
-	        em.merge(pass);
-	        t.commit();
-
-	        System.out.println("L'abbonamento è stato rinnovato con successo");
-	    } else {
-	        System.out.println("L'utente non ha ancora un abbonamento");
+	    if(pass.getSubType() == null) {
+	    	
+	    	t.begin();
+	    	Query q = em.createQuery("UPDATE Pass p SET subType = :subType, expireDateSub = :expireDateSub WHERE p.id = :id");
+	    	
+	    	q.setParameter("subType", subType);
+	    	q.setParameter("expireDateSub", subType.equals(SubscriptionType.Weekly)? data.plusWeeks(1) : data.plusMonths(1));
+	    	q.setParameter("id", id);
+	    	
+	    	q.executeUpdate();
+	    	
+	    	t.commit();
+	    	
+	    	System.out.println("Tipo di abbonamento aggiornato con successo.");
+	    	
 	    }
 	}
 }
