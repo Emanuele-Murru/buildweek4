@@ -57,23 +57,4 @@ public class PassDAO {
 			}else System.out.println("La tessera è ancora valida.");
 		}else System.out.println("Tessera non trovata!");
 	}
-
-	public void renewalPass(User user, SubscriptionType type) {
-	    Pass pass = findPassByUserId(user);
-
-	    if (pass == null) {
-	        pass = user.getPass();
-	        LocalDate newExpiryDate = pass.getExpiryDatePass().plusMonths(1);
-	        pass.setExpiryDatePass(newExpiryDate);
-
-	        EntityTransaction t = em.getTransaction();
-	        t.begin();
-	        em.merge(pass);
-	        t.commit();
-
-	        System.out.println("L'abbonamento è stato rinnovato con successo");
-	    } else {
-	        System.out.println("L'utente non ha ancora un abbonamento");
-	    }
-	}
 }
