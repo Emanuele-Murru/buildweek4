@@ -7,38 +7,36 @@ import entities.User;
 
 public class UserDAO {
 
-	private final EntityManager entityManager;
+	private final EntityManager em;
 
 	public UserDAO(EntityManager _entityManager) {
-		this.entityManager = _entityManager;
+		this.em = _entityManager;
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - save
 	public void save(User _user) {
-		EntityTransaction entityTransaction = entityManager.getTransaction();
-		entityTransaction.begin();
-		entityManager.persist(_user);
-		entityTransaction.commit();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		em.persist(_user);
+		et.commit();
 		System.out.println("Utente salvato correttamente");
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - findById
 	public User findById(long _id) {
-		User desiredUser = entityManager.find(User.class, _id);
-		return desiredUser;
+		User du = em.find(User.class, _id);
+		return du;
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - findByIdAndDelete
 	public void findByIdAndDelete(long _id) {
-		User desiredUser = entityManager.find(User.class, _id);
-		if (desiredUser != null) {
-			EntityTransaction entityTransaction = entityManager.getTransaction();
-			entityTransaction.begin();
-			entityManager.remove(desiredUser);
-			entityTransaction.commit();
+		User du = em.find(User.class, _id);
+		if (du != null) {
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			em.remove(du);
+			et.commit();
 
-		} else {
-			System.out.println("Utente non trovato");
-		}
+		} else System.out.println("Utente non trovato");
 	}
 }
