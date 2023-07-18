@@ -33,7 +33,7 @@ public class PassDAO {
 		query.setParameter("user", user);
 		return query.getSingleResult();
 	}
-
+	
 	public void renewalPass(Pass pass) {
 		if (pass != null) {
 			if (pass.getExpiryDatePass().getYear() != LocalDate.now().getYear()) {
@@ -54,4 +54,30 @@ public class PassDAO {
 			}else System.out.println("La tessera è ancora valida.");
 		}else System.out.println("Tessera non trovata!");
 	}
+	
+	public void editSubscription(Pass pass, String type, LocalDate data) {
+		String subTypeString = type;
+		SubscriptionType subType = SubscriptionType.valueOf(subTypeString);
+		long id = pass.getId();
+		
+	    EntityTransaction t = em.getTransaction();
+
+	    if(pass.getSubType() == null) {
+	    	
+	    	t.begin();
+	    	Query q = em.createQuery("UPDATE Pass p SET subType = :subType, expireDateSub = :expireDateSub WHERE p.id = :id");
+	    	
+	    	q.setParameter("subType", subType);
+	    	q.setParameter("expireDateSub", subType.equals(SubscriptionType.Weekly)? data.plusWeeks(1) : data.plusMonths(1));
+	    	q.setParameter("id", id);
+	    	
+	    	q.executeUpdate();
+	    	
+	    	t.commit();
+	    	
+	    	System.out.println("Tipo di abbonamento aggiornato con successo.");
+	    	
+	    }
+
+	
 }
