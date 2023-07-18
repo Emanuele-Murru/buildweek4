@@ -24,16 +24,15 @@ public class Pass extends Ticket{
 	private LocalDate expireDateSub;
 	private LocalDate expiryDatePass; 
 	
-	public Pass(Long _ticketId, LocalDate _issueDate, Reseller _reseller, User _userId, SubscriptionType _subType, LocalDate _expiryDateSub, LocalDate _expireDatePass) {
+	public Pass(LocalDate _issueDate, Reseller _reseller, User _userId, SubscriptionType _subType, LocalDate _expiryDateSub, LocalDate _expireDatePass) {
 		
-		super(_ticketId, _issueDate, _reseller);
-		this.userId = _userId;
+		super(_issueDate, _reseller);
 		this.expireDateSub = _expiryDateSub;
 		this.expiryDatePass = _expireDatePass;
 	}
 	
 	@Override
 	public String toString() {
-		return "Ticket [ID Biglietto =" + getTicketId() + ", Data di emissione =" + getIssueDate() + ", Rivenditore = " + getReseller() + "ID User =" + userId + ", Tipo di abbonamento =" + subType + ", Data scadenza abbonamento =" + expireDateSub + ", Data scadenza Tessera =" + expiryDatePass;
+		return "Ticket [ID Biglietto =" + getId() + ", Data di emissione =" + getIssueDate() + ", Rivenditore = " + getReseller() + "ID User =" + userId + ", Tipo di abbonamento =" + subType + ", Data scadenza abbonamento =" + expireDateSub + ", Data scadenza Tessera =" + expiryDatePass;
 	}
 }
