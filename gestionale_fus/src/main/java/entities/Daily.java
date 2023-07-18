@@ -13,20 +13,23 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 
-public class Daily extends Ticket{
-	
-	private LocalDate validationDate;
+public class Daily extends Ticket {
+
+	private LocalDate obliterateDate;
 	private LocalDate expiryDate;
-	
-	public Daily(Long _ticketId, LocalDate _issueDate, Reseller _reseller, LocalDate _validationDate, LocalDate _expiryDate) {
+
+	public Daily(Long _ticketId, LocalDate _issueDate, Reseller _reseller, LocalDate _obliterateDate,
+			LocalDate _expiryDate) {
 		super(_ticketId, _issueDate, _reseller);
-		this.validationDate = _validationDate;
+		this.obliterateDate = _obliterateDate;
 		this.expiryDate = _expiryDate;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Biglietto giornaliero [ID Biglietto =" + getTicketId() + ", Data di emissione =" + getIssueDate() + ", Rivenditore = " + getReseller() + ", Data obliterazione =" + validationDate + "Data di scadenza =" + expiryDate;
+		return "Biglietto giornaliero [ID Biglietto =" + getTicketId() + ", Data di emissione =" + getIssueDate()
+				+ ", Rivenditore = " + getReseller() + ", Data obliterazione =" + obliterateDate + "Data di scadenza ="
+				+ expiryDate;
 	}
-	
+
 }
