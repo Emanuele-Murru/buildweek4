@@ -1,7 +1,6 @@
 package dao;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -10,7 +9,6 @@ import javax.persistence.TypedQuery;
 
 import entities.Pass;
 import entities.User;
-import entities.Vehicle;
 import enums.SubscriptionType;
 
 public class PassDAO {
@@ -36,14 +34,14 @@ public class PassDAO {
 		query.setParameter("user", user);
 		return query.getSingleResult();
 	}
-	
+
 	public void renewalPass(Pass pass) {
-		if(pass != null) {
-			if(pass.getExpiryDatePass().getYear() != LocalDate.now().getYear()) {
-				
+		if (pass != null) {
+			if (pass.getExpiryDatePass().getYear() != LocalDate.now().getYear()) {
+
 				long id = pass.getId();
 				LocalDate data = LocalDate.of(LocalDate.now().getYear(), 12, 31);
-				
+
 				EntityTransaction t = em.getTransaction();
 				t.begin();
 				Query q = em.createQuery("UPDATE Pass p SET expiryDatePass = :expiryDatePass WHERE id = :id");

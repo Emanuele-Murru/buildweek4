@@ -5,12 +5,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entities.Daily;
 import entities.Route;
 import entities.Ticket;
-import entities.User;
 import entities.Vehicle;
 import enums.VehicleType;
 
@@ -37,23 +37,41 @@ public class VehicleDAO {
 				(vehicle.getType().equals(VehicleType.Bus)) ? "Bus salvato con successo" : "Tram salvato con successo");
 
 	}
-	
+
 	public Vehicle findById(long _id) {
 		Vehicle v = em.find(Vehicle.class, _id);
 		return v;
 	}
 
-	// * * * * * TIMBRA TICKET * * * * *
-	// * * * * * WORK IN PROGRESS * * * * *
-	public void timbraTicket(Ticket ticket, LocalDate dataTimbratura) {
+	// validate daily ticket
+	public void validateDaily(Daily daily, LocalDate obliterateDate) {
 
-		if (ticket.getDataTimbratura() != null) System.out.println("Il biglietto è già stato timbrato.");
-		else ticket.setDate(dataTimbratura);
+		if (daily.getObliterateDate() != null) {
+
+			if (daily.getExpiryDate() != obliterateDate && daily.getExpiryDate().isAfter(obliterateDate)) {
+
+				EntityTransaction t = em.getTransaction();
+				t.begin();
+				Query q = em.createQuery("UPDATE Daily d SET d.obliterateDate = :obliterateDate WHERE d.id = :id");
+				q.setParameter("obliterateDate", obliterateDate);
+				q.setParameter("daily.id", daily.getId());
+
+				q.executeUpdate();
+
+				t.commit();
+				System.out.println("Biglietto timbrato con successo");
+
+			} else {
+				System.out.println("Biglietto scaduto");
+
+			}
+		} else {
+			System.out.println("Biglietto già timbrato");
+		}
 
 	}
 
 	// total obliterated daily ticket
-	// * * * * * WORK IN PROGRESS * * * * *
 	public int obliteratedDaily(Vehicle _vehicle) {
 
 		TypedQuery<Ticket> query = em.createQuery(
@@ -66,7 +84,6 @@ public class VehicleDAO {
 	}
 
 	// daily ticket between dates
-	// * * * * * WORK IN PROGRESS * * * * *
 	public int dailyBetweenDates(Vehicle _vehicle, LocalDate _startDate, LocalDate _endDate) {
 
 		TypedQuery<Ticket> query = em.createQuery(
@@ -82,7 +99,8 @@ public class VehicleDAO {
 
 	// define route
 	public void defineRoute(Vehicle vehicle, Route route) {
-		System.out.println((vehicle.getRoute() == null) ? "Rotta assegnata con successo" : "Rotta modificata con successo");
+		System.out.println(
+				(vehicle.getRoute() == null) ? "Rotta assegnata con successo" : "Rotta modificata con successo");
 		vehicle.setRoute(route);
 	}
 }
