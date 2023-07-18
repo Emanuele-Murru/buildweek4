@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import entities.Daily;
 import entities.Route;
 import entities.Ticket;
 import entities.Vehicle;
@@ -42,12 +44,29 @@ public class VehicleDAO {
 	}
 
 	// * * * * * TIMBRA TICKET * * * * *
-	public void timbraTicket(Ticket ticket, LocalDate dataTimbratura) {
+	public void validateDaily(Daily daily, LocalDate obliterateDate) {
 
-		if (ticket.getDataTimbratura() != null)
-			System.out.println("Il biglietto è già stato timbrato.");
-		else
-			ticket.setDate(dataTimbratura);
+		if (daily != null) {
+			if (daily.getExpiryDate() == null) {
+
+				EntityTransaction t = em.getTransaction();
+				t.begin();
+				Query q = em.createQuery("UPDATE Daily d SET d.obliterateDate = :obliterateDate WHERE d.id = :id");
+				q.setParameter("obliterateDate", obliterateDate);
+				q.setParameter("daily.id", daily.getId());
+
+				q.executeUpdate();
+
+				t.commit();
+				System.out.println("Biglietto timbrato con successo");
+
+			} else {
+				System.out.println("Il biglietto è già stato timbrato");
+
+			}
+		} else {
+			System.out.println("Il biglietto non è valido");
+		}
 
 	}
 
