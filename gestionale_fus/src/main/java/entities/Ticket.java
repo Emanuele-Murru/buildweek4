@@ -25,8 +25,8 @@ public abstract class Ticket {
 	private LocalDate issueDate;
 	private Reseller reseller;
 
-	public Ticket(Long _ticketId, LocalDate _issueDate, Reseller _reseller) {
-		this.id = _ticketId;
+	public Ticket(long _id, LocalDate _issueDate, Reseller _reseller) {
+		this.id = _id;
 		this.issueDate = _issueDate;
 		this.reseller = _reseller;
 	}
