@@ -47,7 +47,7 @@ public class AutoResellerDAO {
 			Query query = em.createQuery("UPDATE AutoReseller a SET a.status = :_status WHERE a.id = :_id")
 					.setParameter("_status", _status);
 
-			int updatedStatus = query.executeUpdate();
+			query.executeUpdate();
 
 			et.commit();
 			System.out.println("Lo stato del distributore automatico è stato aggiornato con successo");
