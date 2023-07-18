@@ -16,35 +16,64 @@ public class VehicleDAO {
 
 	private final EntityManager em;
 
-	public VehicleDAO(EntityManager em) {this.em = em;}
-	
+	public VehicleDAO(EntityManager em) {
+		this.em = em;
+	}
+
 	// save vehicle
 	public void saveVehicle(Vehicle vehicle) {
-		
+
 		EntityTransaction t = em.getTransaction();
 
-		t.begin(); 
+		t.begin();
 
-		em.persist(vehicle);		
+		em.persist(vehicle);
 
 		t.commit();
-		
-		System.out.println((vehicle.getType().equals(VehicleType.Bus)) ? "Bus salvato con successo" : "Tram salvato con successo");
-		
+
+		System.out.println(
+				(vehicle.getType().equals(VehicleType.Bus)) ? "Bus salvato con successo" : "Tram salvato con successo");
+
 	}
-	
-	// total obliterated daily ticket 
-	public List<Daily> obliteratedDaily(Vehicle vehicle) {
-		TypedQuery<Daily> query = em.createQuery("SELECT l FROM Lettura l WHERE l.anno = :anno", Daily.class);
-		query.setParameter("vehicle", vehicle);
-		return query.getResultList();
+
+	// * * * * * TIMBRA TICKET * * * * *
+	// * * * * * WORK IN PROGRESS * * * * *
+	public void timbraTicket(Ticket _ticket, LocalDate _dataTimbratura) {
+
+		if (ticket.getDataTimbratura() != null) {
+			System.out.println("Il biglietto è già stato timbrato.");
+		}
+
+		ticket.setDate(dataTimbratura)
+
 	}
-	
+
+	// total obliterated daily ticket
+	// * * * * * WORK IN PROGRESS * * * * *
+	public int obliteratedDaily(Vehicle _vehicle) {
+
+		TypedQuery<Ticket> query = em.createQuery(
+				"SELECT t FROM Ticket t WHERE t.vehicle = :_vehicle AND t.dataTimbratura IS NOT NULL", Ticket.class);
+		query.setParameter("_vehicle", _vehicle);
+
+		List<Ticket> tickets = query.getResultList();
+
+		return tickets.size();
+	}
+
 	// daily ticket between dates
-	public List<Daily> dailyBetweenDates(Vehicle vehicle, LocalDate start, LocalDate end) {
-		TypedQuery<Daily> query = em.createQuery("SELECT l FROM Lettura l WHERE l.anno = :anno", Daily.class);
-		query.setParameter("vehicle", vehicle);
-		return query.getResultList();
+	// * * * * * WORK IN PROGRESS * * * * *
+	public int dailyBetweenDates(Vehicle _vehicle, LocalDate _startDate, LocalDate _endDate) {
+
+		TypedQuery<Ticket> query = em.createQuery(
+				"SELECT t FROM Ticket t WHERE t.vehicle = :_vehicle AND t.dataTimbratura BETWEEN :_startDate AND :_endDate",
+				Ticket.class).setParameter("_vehicle", _vehicle).setParameter("_startDate", _startDate)
+				.setParameter("_endDate", _endDate);
+
+		List<Ticket> tickets = query.getResultList();
+
+		return tickets.size();
+
 	}
 
 	// define route
