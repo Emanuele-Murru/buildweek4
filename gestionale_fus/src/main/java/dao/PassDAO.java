@@ -35,6 +35,26 @@ public class PassDAO {
 		return query.getSingleResult();
 	}
 	
+	public void renewalPass(Pass pass) {
+		if (pass != null) {
+			if (pass.getExpiryDatePass().getYear() != LocalDate.now().getYear()) {
+
+				long id = pass.getId();
+				LocalDate data = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+
+				EntityTransaction t = em.getTransaction();
+				t.begin();
+				Query q = em.createQuery("UPDATE Pass p SET expiryDatePass = :expiryDatePass WHERE id = :id");
+				q.setParameter("expiryDatePass", data);
+				q.setParameter("id", id);
+
+				q.executeUpdate();
+
+				t.commit();
+				System.out.println("Tessera rinnovata con successo!");
+			}else System.out.println("La tessera è ancora valida.");
+		}else System.out.println("Tessera non trovata!");
+	}
 	
 	public void editSubscription(Pass pass, String type, LocalDate data) {
 		String subTypeString = type;
@@ -60,24 +80,5 @@ public class PassDAO {
 	    	
 	    }
 
-	public void renewalPass(Pass pass) {
-		if (pass != null) {
-			if (pass.getExpiryDatePass().getYear() != LocalDate.now().getYear()) {
-
-				long id = pass.getId();
-				LocalDate data = LocalDate.of(LocalDate.now().getYear(), 12, 31);
-
-				EntityTransaction t = em.getTransaction();
-				t.begin();
-				Query q = em.createQuery("UPDATE Pass p SET expiryDatePass = :expiryDatePass WHERE id = :id");
-				q.setParameter("expiryDatePass", data);
-				q.setParameter("id", id);
-
-				q.executeUpdate();
-
-				t.commit();
-				System.out.println("Tessera rinnovata con successo!");
-			}else System.out.println("La tessera è ancora valida.");
-		}else System.out.println("Tessera non trovata!");
-	}
+	
 }
