@@ -6,8 +6,15 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Getter
+@Setter
+@NoArgsConstructor
 public abstract class Reseller {
 
 	// - - - - - - - - - - - - - - - - - - - - attributes
@@ -24,26 +31,7 @@ public abstract class Reseller {
 	// @JoinColumn(name = "ticket_id")
 	// protected Reseller reseller;
 
-	// - - - - - - - - - - - - - - - - - - - - constructors
-	public Reseller() {
-
-	}
-
 	public Reseller(String _name) {
-		this.name = _name;
-
-	}
-
-	// - - - - - - - - - - - - - - - - - - - - getters & setters
-	public long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String _name) {
 		this.name = _name;
 	}
 
