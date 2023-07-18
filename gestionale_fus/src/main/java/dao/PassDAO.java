@@ -80,5 +80,34 @@ public class PassDAO {
 	    	
 	    }
 	}
+	//Metodo 1
+	public void checkValidity(Pass pass) {
+		SubscriptionType subType = pass.getSubType();
+		
+		if (subType != null) {
+			if(subType == SubscriptionType.Weekly || subType == SubscriptionType.Monthly) {
+				System.out.println("Il tuo abbonamento" + subType + " é valido");
+			}
+		}else {
+			System.out.println("Abbonamento non valido o non ancora comprato");
+		}
+	}
 	
+	//Metodo 2
+	public void checkPassSubType(Pass pass) {
+	    long id = pass.getId();
+	    SubscriptionType subType = pass.getSubType();
+
+	    TypedQuery<Long> query = em.createQuery("SELECT COUNT(p) FROM Pass p WHERE p.id = :id AND p.subType = :subType", Long.class);
+	    query.setParameter("id", id);
+	    query.setParameter("subType", subType);
+
+	    long result = query.getSingleResult();
+	    
+	    if (result > 0) {
+	        System.out.println("Il pass con il tipo di abbonamento " + subType + "é valido.");
+	    } else {
+	        System.out.println("Il pass con il tipo di abbonamento " + subType + ". Non è valido.");
+	    }
+	}
 }
