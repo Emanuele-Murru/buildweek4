@@ -46,12 +46,13 @@ public class VehicleDAO {
 	// validate daily ticket
 	public void validateDaily(Daily daily, LocalDate obliterateDate) {
 
-		if (daily != null) {
-			if (daily.getExpiryDate() == null) {
+		if (daily.getObliterateDate() != null) {
+
+			if (daily.getExpiryDate() != obliterateDate && daily.getExpiryDate().isAfter(obliterateDate)) {
 
 				EntityTransaction t = em.getTransaction();
 				t.begin();
-				Query q = em.createQuery("UPDATE Daily d SET d.expiryDate = :obliterateDate WHERE d.id = :id");
+				Query q = em.createQuery("UPDATE Daily d SET d.obliterateDate = :obliterateDate WHERE d.id = :id");
 				q.setParameter("obliterateDate", obliterateDate);
 				q.setParameter("daily.id", daily.getId());
 
@@ -61,11 +62,11 @@ public class VehicleDAO {
 				System.out.println("Biglietto timbrato con successo");
 
 			} else {
-				System.out.println("Biglietto già timbrato");
+				System.out.println("Biglietto scaduto");
 
 			}
 		} else {
-			System.out.println("Biglietto non valido");
+			System.out.println("Biglietto già timbrato");
 		}
 
 	}

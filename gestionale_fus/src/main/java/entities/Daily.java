@@ -15,7 +15,7 @@ import lombok.Setter;
 
 public class Daily extends Ticket {
 
-	private LocalDate obliterateDate;
+	private LocalDate obliterateDate = null;
 	private LocalDate expiryDate;
 
 	public Daily(LocalDate _issueDate, Reseller _reseller, LocalDate expiryDate) {
@@ -29,9 +29,5 @@ public class Daily extends Ticket {
 				+ ", Rivenditore = " + getReseller() + ", Data obliterazione =" + obliterateDate + "Data di scadenza ="
 				+ expiryDate;
 	}
-
-
-
-	
 
 }
