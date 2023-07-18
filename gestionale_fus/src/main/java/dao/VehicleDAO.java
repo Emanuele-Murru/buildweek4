@@ -43,7 +43,7 @@ public class VehicleDAO {
 		return v;
 	}
 
-	// * * * * * TIMBRA TICKET * * * * *
+	// validate daily ticket
 	public void validateDaily(Daily daily, LocalDate obliterateDate) {
 
 		if (daily != null) {
@@ -61,11 +61,11 @@ public class VehicleDAO {
 				System.out.println("Biglietto timbrato con successo");
 
 			} else {
-				System.out.println("Il biglietto è già stato timbrato");
+				System.out.println("Biglietto già timbrato");
 
 			}
 		} else {
-			System.out.println("Il biglietto non è valido");
+			System.out.println("Biglietto non valido");
 		}
 
 	}
