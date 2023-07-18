@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import entities.Pass;
 import entities.User;
+import enums.SubscriptionType;
 
 public class PassDAO {
 	private final EntityManager em;
@@ -78,6 +79,6 @@ public class PassDAO {
 	    	System.out.println("Tipo di abbonamento aggiornato con successo.");
 	    	
 	    }
-
+	}
 	
 }
