@@ -46,7 +46,7 @@ public class GestionaleFus {
 		PassDAO pDAO = new PassDAO(em);
 		pDAO.createPassTicket(p1);
 
-		pDAO.editSubscription(p1, "Weekly", LocalDate.of(2023, 7, 18));
+		// pDAO.editSubscription(p1, "Weekly", LocalDate.of(2023, 7, 18));
 
 		em.close();
 		entityManagerFactory.close();
