@@ -80,5 +80,22 @@ public class PassDAO {
 	    	
 	    }
 	}
+	
+	public void checkSubType(Pass pass) {
+	    long id = pass.getId();
+	    SubscriptionType subType = pass.getSubType();
+
+	    TypedQuery<Long> query = em.createQuery("SELECT COUNT(p) FROM Pass p WHERE p.id = :id AND p.subType = :subType", Long.class);
+	    query.setParameter("id", id);
+	    query.setParameter("subType", subType);
+
+	    long result = query.getSingleResult();
+	    
+	    if (result > 0) {
+	        System.out.println("L'abbonamento " + subType + "é valido.");
+	    } else {
+	        System.out.println("L'abbonamento " + subType + ". Non è valido.");
+	    }
+	}
 
 }
