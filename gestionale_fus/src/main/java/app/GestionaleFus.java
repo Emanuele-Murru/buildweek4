@@ -31,8 +31,9 @@ public class GestionaleFus {
 		// scanner
 		Scanner scanner = new Scanner(System.in);
 		
-		// while flag variable
-		int c = 0;
+		// while flags variables
+		int c1 = 0;
+		int c2 = 0;
 		
 		// MANAGED ENTITIES-----------------------------------------------------------------
 		
@@ -45,7 +46,7 @@ public class GestionaleFus {
 		// MAIN MENU------------------------------------------------------------------------
 		
 		do {
-			System.out.println("GESTIONALE F.U.S. TRASPORTI\n");
+			System.out.println("-------------------------GESTIONALE F.U.S. TRASPORTI-------------------------\n");
 			System.out.println("Dove vuoi effettuare operazioni? (Completare un'operazione riporta a questo menù)");
 			System.out.println("1 - Utenti");
 			System.out.println("2 - Rivenditori");
@@ -54,11 +55,32 @@ public class GestionaleFus {
 			System.out.println("5 - Tratte\n");
 			System.out.println("0 - Chiudi Programma");
 
-			c = Integer.parseInt(scanner.nextLine());
+			c1 = Integer.parseInt(scanner.nextLine());
 			
-			if(c != 0) {
-				switch(c) {
+			System.out.println();
+			if(c1 != 0) {
+				switch(c1) {
 				case 1:
+					System.out.println("Quale operazione vuoi effettuare?");
+					System.out.println("1 - Inserire nuovo utente");
+					System.out.println("2 - Cerca utente tramite ID");
+					System.out.println("3 - Elimina utente tramite ID");
+					System.out.println("4 - Validità della tessera di un utente\n");
+					System.out.println("0 - Torna al menù");
+					
+					c2 = Integer.parseInt(scanner.nextLine());
+					
+					System.out.println();
+
+					if(c2 != 0) {
+						switch(c2) {
+							case 1:
+								System.out.println("Funziona");
+								System.out.println();
+
+								break;
+						}
+					}
 					
 					break;
 					
@@ -80,8 +102,8 @@ public class GestionaleFus {
 				}
 			}
 			
-
-		}while(c != 0);
+			
+		}while(c1 != 0);
 		
 //		AutoReseller ar1 = new AutoReseller("Primo", AutoResellerStatus.ACTIVE);
 //		autoReseller.save(ar1);
