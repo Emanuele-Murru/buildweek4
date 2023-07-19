@@ -3,9 +3,10 @@ package entities;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import enums.VehicleStatus;
@@ -22,12 +23,16 @@ public class VehicleStatusUpdate {
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	private Vehicle vehicle;	
+
+	@ManyToOne
+	// @JoinColumn(name = "VehicleStatusUpdate_id")
+	private Vehicle vehicle;
 	private LocalDate start;
 	private LocalDate end;
+
+	@Enumerated(EnumType.STRING)
 	private VehicleStatus maintenanceWork;
-	
+
 	public VehicleStatusUpdate(Vehicle vehicle, LocalDate start, LocalDate end, VehicleStatus maintenanceWork) {
 		this.vehicle = vehicle;
 		this.start = start;
@@ -40,8 +45,5 @@ public class VehicleStatusUpdate {
 		return "VehicleStatusUpdate [id=" + id + ", vehicleId=" + vehicle + ", start=" + start + ", end=" + end
 				+ ", maintenanceWork=" + maintenanceWork + "]";
 	}
-	
-	
-	
-	
+
 }

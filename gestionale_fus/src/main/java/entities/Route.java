@@ -1,7 +1,10 @@
 package entities;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +18,14 @@ public class Route {
 
 	@Id
 	private String routeName;
-	
+
 	private String start;
 	private String terminal;
 	private int avgTime = 0;
-	
+
+	@OneToMany(mappedBy = "route")
+	private Set<Vehicle> vehicles;
+
 	public Route(String routeName, String start, String terminal) {
 		this.routeName = routeName;
 		this.start = start;
@@ -31,5 +37,5 @@ public class Route {
 		return "Route [routeName=" + routeName + ", start=" + start + ", terminal=" + terminal + ", avgTime=" + avgTime
 				+ "]";
 	}
-	
+
 }

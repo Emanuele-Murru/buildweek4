@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import enums.VehicleType;
@@ -28,13 +29,15 @@ public class Vehicle {
 	@Enumerated(EnumType.STRING)
 	private VehicleType type;
 
-	@OneToMany
-	private Set<Daily> daily;
-
 	@OneToMany(mappedBy = "vehicle")
 	private Set<Ticket> tickets;
 
+	@OneToMany(mappedBy = "vehicle")
+	private Set<VehicleStatusUpdate> history;
+
 	private int capacity;
+
+	@ManyToOne
 	private Route route = null;
 
 	public Vehicle(VehicleType type) {

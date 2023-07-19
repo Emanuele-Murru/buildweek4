@@ -1,6 +1,8 @@
 package entities;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import enums.AutoResellerStatus;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import lombok.Setter;
 public class AutoReseller extends Reseller {
 
 	// - - - - - - - - - - - - - - - - - - - - attributes
+	@Enumerated(EnumType.STRING)
 	private AutoResellerStatus status;
 
 	public AutoReseller(String _name, AutoResellerStatus _status) {
