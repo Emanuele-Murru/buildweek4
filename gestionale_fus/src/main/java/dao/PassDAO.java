@@ -34,7 +34,7 @@ public class PassDAO {
 		query.setParameter("user", user);
 		return query.getSingleResult();
 	}
-	
+
 	public void renewalPass(Pass pass) {
 		if (pass != null) {
 			if (pass.getExpiryDatePass().getYear() != LocalDate.now().getYear()) {
@@ -52,50 +52,55 @@ public class PassDAO {
 
 				t.commit();
 				System.out.println("Tessera rinnovata con successo!");
-			}else System.out.println("La tessera è ancora valida.");
-		}else System.out.println("Tessera non trovata!");
+			} else
+				System.out.println("La tessera è ancora valida.");
+		} else
+			System.out.println("Tessera non trovata!");
 	}
-	
+
 	public void editSubscription(Pass pass, String type, LocalDate data) {
 		String subTypeString = type;
 		SubscriptionType subType = SubscriptionType.valueOf(subTypeString);
 		long id = pass.getId();
-		
-	    EntityTransaction t = em.getTransaction();
 
-	    if(pass.getSubType() == null) {
-	    	
-	    	t.begin();
-	    	Query q = em.createQuery("UPDATE Pass p SET subType = :subType, expireDateSub = :expireDateSub WHERE p.id = :id");
-	    	
-	    	q.setParameter("subType", subType);
-	    	q.setParameter("expireDateSub", subType.equals(SubscriptionType.Weekly)? data.plusWeeks(1) : data.plusMonths(1));
-	    	q.setParameter("id", id);
-	    	
-	    	q.executeUpdate();
-	    	
-	    	t.commit();
-	    	
-	    	System.out.println("Tipo di abbonamento aggiornato con successo.");
-	    	
-	    }
+		EntityTransaction t = em.getTransaction();
+
+		if (pass.getSubType() == null) {
+
+			t.begin();
+			Query q = em.createQuery(
+					"UPDATE Pass p SET subType = :subType, expireDateSub = :expireDateSub WHERE p.id = :id");
+
+			q.setParameter("subType", subType);
+			q.setParameter("expireDateSub",
+					subType.equals(SubscriptionType.Weekly) ? data.plusWeeks(1) : data.plusMonths(1));
+			q.setParameter("id", id);
+
+			q.executeUpdate();
+
+			t.commit();
+
+			System.out.printf("Tipo di abbonamento aggiornato con successo a %s.\n", type);
+
+		}
 	}
-	
+
 	public void checkSubType(Pass pass) {
-	    long id = pass.getId();
-	    SubscriptionType subType = pass.getSubType();
+		long id = pass.getId();
+		SubscriptionType subType = pass.getSubType();
 
-	    TypedQuery<Long> query = em.createQuery("SELECT COUNT(p) FROM Pass p WHERE p.id = :id AND p.subType = :subType", Long.class);
-	    query.setParameter("id", id);
-	    query.setParameter("subType", subType);
+		TypedQuery<Long> query = em.createQuery("SELECT COUNT(p) FROM Pass p WHERE p.id = :id AND p.subType = :subType",
+				Long.class);
+		query.setParameter("id", id);
+		query.setParameter("subType", subType);
 
-	    long result = query.getSingleResult();
-	    
-	    if (result > 0) {
-	        System.out.println("L'abbonamento " + subType + "é valido.");
-	    } else {
-	        System.out.println("L'abbonamento " + subType + ". Non è valido.");
-	    }
+		long result = query.getSingleResult();
+
+		if (result > 0) {
+			System.out.println("L'abbonamento " + subType + "é valido.");
+		} else {
+			System.out.println("L'abbonamento " + subType + ". Non è valido.");
+		}
 	}
 
 }

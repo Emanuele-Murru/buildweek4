@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Getter;
@@ -29,11 +28,9 @@ public abstract class Ticket {
 	private LocalDate issueDate;
 
 	@ManyToOne
-	@JoinColumn(name = "ticket_id")
 	private Reseller reseller;
 
 	@ManyToOne
-	// @JoinColumn(name = "ticket_id")
 	private Vehicle vehicle;
 
 	public Ticket(LocalDate _issueDate, Reseller _reseller) {
