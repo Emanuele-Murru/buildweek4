@@ -9,7 +9,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,21 +25,25 @@ public abstract class Ticket {
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	private LocalDate issueDate;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ticket_id")
 	private Reseller reseller;
+
+	@ManyToOne
+	// @JoinColumn(name = "ticket_id")
+	private Vehicle vehicle;
 
 	public Ticket(LocalDate _issueDate, Reseller _reseller) {
 		this.issueDate = _issueDate;
 		this.reseller = _reseller;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Ticket [ID Biglietto =" + id + ", data di emissione =" + issueDate + ", Rivenditore = " + reseller;
 	}
-	
+
 }

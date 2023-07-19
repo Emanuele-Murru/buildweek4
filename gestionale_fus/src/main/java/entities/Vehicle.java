@@ -24,20 +24,22 @@ public abstract class Vehicle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Enumerated(EnumType.STRING)
 	private VehicleType type;
-	
+
 	@OneToMany
 	private Set<Daily> daily;
-	
+
+	@OneToMany(mappedBy = "vehicle")
+	private Set<Ticket> tickets;
+
 	private int capacity;
 	private Route route = null;
-	
-	
+
 	public Vehicle(VehicleType type) {
 		this.capacity = (type.equals(VehicleType.Bus)) ? 30 : 50;
 		this.type = type;
 	}
-	
+
 }
