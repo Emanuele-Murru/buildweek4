@@ -58,10 +58,13 @@ public class PassDAO {
 			System.out.println("Tessera non trovata!");
 	}
 
-	public void editSubscription(Pass pass, String type, LocalDate data) {
+	public void editSubscription(long id, String type, LocalDate data) {
 		String subTypeString = type;
 		SubscriptionType subType = SubscriptionType.valueOf(subTypeString);
-		long id = pass.getId();
+
+		TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.id = :id", Pass.class);
+
+		Pass pass = query.getResultList().get(0);
 
 		EntityTransaction t = em.getTransaction();
 
