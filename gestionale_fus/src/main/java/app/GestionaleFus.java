@@ -1,6 +1,7 @@
 package app;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,32 +25,95 @@ public class GestionaleFus {
 
 	public static void main(String[] args) {
 
+		// entity manager 
 		EntityManager em = entityManagerFactory.createEntityManager();
+		
+		// scanner
+		Scanner scanner = new Scanner(System.in);
+		
+		// while flag variable
+		int c = 0;
+		
+		// MANAGED ENTITIES-----------------------------------------------------------------
+		
+		AutoResellerDAO autoReseller = new AutoResellerDAO(em);
+		AuthorizedResellerDAO authorizedReseller = new AuthorizedResellerDAO(em);
+		DailyDAO daily = new DailyDAO(em);
+		UserDAO user = new UserDAO(em);
+		PassDAO pass = new PassDAO(em);
+		
+		// MAIN MENU------------------------------------------------------------------------
+		
+		do {
+			System.out.println("GESTIONALE F.U.S. TRASPORTI\n");
+			System.out.println("Dove vuoi effettuare operazioni? (Completare un'operazione riporta a questo menù)");
+			System.out.println("1 - Utenti");
+			System.out.println("2 - Rivenditori");
+			System.out.println("3 - Biglietti/Tessere");
+			System.out.println("4 - Mezzi");
+			System.out.println("5 - Tratte\n");
+			System.out.println("0 - Chiudi Programma");
 
-		AutoReseller ar1 = new AutoReseller("Primo", AutoResellerStatus.ACTIVE);
-		AutoResellerDAO arDAO = new AutoResellerDAO(em);
-		arDAO.save(ar1);
+			c = Integer.parseInt(scanner.nextLine());
+			
+			if(c != 0) {
+				switch(c) {
+				case 1:
+					
+					break;
+					
+				case 2:
+					
+					break;
+					
+				case 3:
+						
+					break;
+										
+				case 4:
+					
+					break;
+					
+				case 5:
+						
+					break;
+				}
+			}
+			
 
-		AuthorizedReseller atzr1 = new AuthorizedReseller("PrimoAtzr");
-		AuthorizedResellerDAO atzrDAO = new AuthorizedResellerDAO(em);
-		atzrDAO.save(atzr1);
-
-		Daily d1 = new Daily(LocalDate.of(2023, 7, 18), atzr1);
-		DailyDAO dDAO = new DailyDAO(em);
-		dDAO.createDailyTicket(d1);
-
-		User u1 = new User("Mario", "Rossi", LocalDate.of(2000, 7, 18), "Milano");
-		UserDAO uDAO = new UserDAO(em);
-		uDAO.save(u1);
-
-		Pass p1 = new Pass(LocalDate.of(2023, 7, 18), atzr1, u1);
-		PassDAO pDAO = new PassDAO(em);
-		pDAO.createPassTicket(p1);
+		}while(c != 0);
+		
+//		AutoReseller ar1 = new AutoReseller("Primo", AutoResellerStatus.ACTIVE);
+//		autoReseller.save(ar1);
+//
+//		AuthorizedReseller atzr1 = new AuthorizedReseller("PrimoAtzr");
+//		
+//		atzrDAO.save(atzr1);
+//
+//		Daily d1 = new Daily(LocalDate.of(2023, 7, 18), atzr1);
+//		
+//		dDAO.createDailyTicket(d1);
+//
+//		User u1 = new User("Mario", "Rossi", LocalDate.of(2000, 7, 18), "Milano");
+//		
+//		uDAO.save(u1);
+//
+//		Pass p1 = new Pass(LocalDate.of(2023, 7, 18), atzr1, u1);
+//		
+//		pDAO.createPassTicket(p1);
 
 		// pDAO.editSubscription(p1, "Weekly", LocalDate.of(2023, 7, 18));
 
+		// entity manager close
 		em.close();
 		entityManagerFactory.close();
+		
+		// scanner close
+		scanner.close();
+		
+		System.out.println("Pogramma chiuso con successo.");
+		
+		
 	}
 
 }
