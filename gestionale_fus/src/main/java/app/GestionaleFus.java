@@ -23,6 +23,8 @@ public class GestionaleFus {
 
 		// Daily d1 = new Daily(LocalDate.of(2023, 7, 18), );
 
+		em.close();
+		entityManagerFactory.close();
 	}
 
 }

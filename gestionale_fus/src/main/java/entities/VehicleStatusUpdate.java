@@ -27,22 +27,22 @@ public class VehicleStatusUpdate {
 	@ManyToOne
 	// @JoinColumn(name = "VehicleStatusUpdate_id")
 	private Vehicle vehicle;
-	private LocalDate start;
-	private LocalDate end;
+	private LocalDate startDate;
+	private LocalDate endDate;
 
 	@Enumerated(EnumType.STRING)
 	private VehicleStatus maintenanceWork;
 
-	public VehicleStatusUpdate(Vehicle vehicle, LocalDate start, LocalDate end, VehicleStatus maintenanceWork) {
+	public VehicleStatusUpdate(Vehicle vehicle, LocalDate startDate, LocalDate endDate, VehicleStatus maintenanceWork) {
 		this.vehicle = vehicle;
-		this.start = start;
-		this.end = end;
+		this.startDate = startDate;
+		this.endDate = endDate;
 		this.maintenanceWork = maintenanceWork;
 	}
 
 	@Override
 	public String toString() {
-		return "VehicleStatusUpdate [id=" + id + ", vehicleId=" + vehicle + ", start=" + start + ", end=" + end
+		return "VehicleStatusUpdate [id=" + id + ", vehicleId=" + vehicle + ", start=" + startDate + ", end=" + endDate
 				+ ", maintenanceWork=" + maintenanceWork + "]";
 	}
 
