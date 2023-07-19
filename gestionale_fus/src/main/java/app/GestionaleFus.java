@@ -75,9 +75,23 @@ public class GestionaleFus {
 					if(c2 != 0) {
 						switch(c2) {
 							case 1:
-								System.out.println("Funziona");
+								System.out.print("Inserire nome nuovo utente: ");
+								String _name = scanner.nextLine();
+								System.out.print("Inserire cognome nuovo utente: ");
+								String _surname = scanner.nextLine();
+								System.out.print("Inserire data nascita (yyyy-mm-dd): ");
+								String _birth = scanner.nextLine();
+								System.out.print("Inserire luogo di nascita: ");
+								String _birthPlace = scanner.nextLine();
+								user.save(new User(_name, _surname, LocalDate.parse(_birth), _birthPlace));
+								System.out.println("\n");
+								break;
+							case 2:
+								System.out.print("Inserire ID utente: ");
+								long _id = Long.parseLong(scanner.nextLine());
 								System.out.println();
-
+								System.out.println(user.findById(_id).toString()); 
+								System.out.println("\n");
 								break;
 						}
 					}

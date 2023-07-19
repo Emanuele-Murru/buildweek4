@@ -42,7 +42,9 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User [" + name + ", " + surname + ", " + birthDate + ", " + birthPlace + "]";
+		String passId = "none";
+		if(pass != null) passId = Long.toString(pass.getId());
+		return "Dati utente " + Long.toString(this.getId()) + " [" + name + ", " + surname + ", " + birthDate + ", " + birthPlace + ", Pass id: " + passId + "]";
 	}
 
 }
