@@ -23,10 +23,7 @@ public class VehicleStatusUpdate {
 	@GeneratedValue
 	private long id;
 	
-	@ManyToOne
-//	@JoinColumn(name = "id")
-	private Vehicle vehicle;
-	
+	private Vehicle vehicle;	
 	private LocalDate start;
 	private LocalDate end;
 	private VehicleStatus maintenanceWork;

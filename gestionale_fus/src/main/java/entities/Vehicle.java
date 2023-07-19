@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import enums.VehicleStatus;
 import enums.VehicleType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,10 +31,6 @@ public abstract class Vehicle {
 	@OneToMany
 	private Set<Daily> daily;
 	
-	@OneToMany(mappedBy = "vehicle")
-	private Set<VehicleStatusUpdate> maintainenceHistory;
-
-	private VehicleStatus vehicleStatus = VehicleStatus.Service;
 	private int capacity;
 	private Route route = null;
 	
@@ -44,14 +39,5 @@ public abstract class Vehicle {
 		this.capacity = (type.equals(VehicleType.Bus)) ? 30 : 50;
 		this.type = type;
 	}
-
-
-	@Override
-	public String toString() {
-		return "Vehicle [id=" + id + ", type=" + type + ", daily=" + daily + ", vehicleStatus=" + vehicleStatus
-				+ ", maintainenceHistory=" + maintainenceHistory + ", capacity=" + capacity + ", route=" + route + "]";
-	}
-	
-	
 	
 }
