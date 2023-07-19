@@ -21,8 +21,10 @@ public class Pass extends Ticket{
 	
 	@OneToOne(mappedBy = "pass")
 	private User user;
+	
 	@Enumerated(EnumType.STRING)
 	private SubscriptionType subType = null;
+	
 	private LocalDate expireDateSub = null;
 	private LocalDate expiryDatePass; 
 		
@@ -34,7 +36,7 @@ public class Pass extends Ticket{
 	
 	@Override
 	public String toString() {
-		return "Ticket [ID Biglietto =" + getId() + ", Data di emissione =" + getIssueDate() + ", Rivenditore = " + getReseller() + "ID User =" + user + ", Tipo di abbonamento =" + subType + ", Data scadenza abbonamento =" + expireDateSub + ", Data scadenza Tessera =" + expiryDatePass;
+		return "Ticket [ID Biglietto =" + this.getId() + ", Data di emissione =" + this.getIssueDate() + ", Rivenditore = " + this.getReseller() + "ID User =" + user + ", Tipo di abbonamento =" + subType + ", Data scadenza abbonamento =" + expireDateSub + ", Data scadenza Tessera =" + expiryDatePass;
 	}
 
 

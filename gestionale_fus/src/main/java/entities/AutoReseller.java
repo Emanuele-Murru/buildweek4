@@ -14,7 +14,7 @@ import lombok.Setter;
 public class AutoReseller extends Reseller {
 
 	// - - - - - - - - - - - - - - - - - - - - attributes
-	protected AutoResellerStatus status;
+	private AutoResellerStatus status;
 
 	public AutoReseller(String _name, AutoResellerStatus _status) {
 		super(_name);
@@ -23,6 +23,6 @@ public class AutoReseller extends Reseller {
 
 	@Override
 	public String toString() {
-		return "AutoReseller [" + name + ", " + status + "]";
+		return "AutoReseller [" + this.getName() + ", " + status + "]";
 	}
 }

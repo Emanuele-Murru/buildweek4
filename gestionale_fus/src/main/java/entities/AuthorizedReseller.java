@@ -15,5 +15,5 @@ public class AuthorizedReseller extends Reseller {
 	public AuthorizedReseller(String _name) {super(_name);}
 
 	@Override
-	public String toString() {return "AuthorizedReseller [" + name + "]";}
+	public String toString() {return "AuthorizedReseller [" + this.getName() + "]";}
 }

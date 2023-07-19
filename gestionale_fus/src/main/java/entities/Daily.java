@@ -18,15 +18,15 @@ public class Daily extends Ticket {
 	private LocalDate obliterateDate = null;
 	private LocalDate expiryDate;
 
-	public Daily(LocalDate _issueDate, Reseller _reseller, LocalDate expiryDate) {
+	public Daily(LocalDate _issueDate, Reseller _reseller) {
 		super(_issueDate, _reseller);
 		this.expiryDate = _issueDate.plusDays(2);
 	}
 
 	@Override
 	public String toString() {
-		return "Biglietto giornaliero [ID Biglietto =" + getId() + ", Data di emissione =" + getIssueDate()
-				+ ", Rivenditore = " + getReseller() + ", Data obliterazione =" + obliterateDate + "Data di scadenza ="
+		return "Biglietto giornaliero [ID Biglietto =" + this.getId() + ", Data di emissione =" + this.getIssueDate()
+				+ ", Rivenditore = " + this.getReseller() + ", Data obliterazione =" + obliterateDate + "Data di scadenza ="
 				+ expiryDate;
 	}
 
