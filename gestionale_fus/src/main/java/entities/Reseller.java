@@ -1,10 +1,13 @@
 package entities;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,19 +20,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public abstract class Reseller {
 
-	// - - - - - - - - - - - - - - - - - - - - attributes
 	@Id
 	@GeneratedValue
 	private long id;
-
-	protected String name;
-
-	// @OneToMany(mappedBy = "reseller") // TO HAVE HERE
-	// protected Set<Ticket> tickets;
-
-	// @ManyToOne // TO HAVE IN TICKET
-	// @JoinColumn(name = "ticket_id")
-	// protected Reseller reseller;
+	
+	@OneToMany(mappedBy = "reseller")
+	private Set<Ticket> tickets;
+	
+	private String name;
 
 	public Reseller(String _name) {
 		this.name = _name;
@@ -37,7 +35,9 @@ public abstract class Reseller {
 
 	@Override
 	public String toString() {
-		return "Reseller [" + id + ", " + name + "]";
+		return "Reseller [id=" + id + ", tickets=" + tickets + ", name=" + name + "]";
 	}
+
+	
 
 }
