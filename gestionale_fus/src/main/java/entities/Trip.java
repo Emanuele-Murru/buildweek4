@@ -13,20 +13,27 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Trip {
-	
+
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	private long idVehicle;
-	
+
 	private String routeName;
-	
+
 	private int tripTime;
 
 	public Trip(Vehicle vehicle, int tripTime) {
 		this.idVehicle = vehicle.getId();
 		this.routeName = vehicle.getRoute().getRouteName();
+		this.tripTime = tripTime;
+	}
+
+	// * * * * * * * * * * * * * * * trip constructor with route
+	public Trip(Vehicle vehicle, Route route, int tripTime) {
+		this.idVehicle = vehicle.getId();
+		this.routeName = route.getRouteName();
 		this.tripTime = tripTime;
 	}
 
@@ -36,7 +43,4 @@ public class Trip {
 				+ "]";
 	}
 
-	
-	
-	
 }

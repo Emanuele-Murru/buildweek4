@@ -123,13 +123,27 @@ public class VehicleDAO {
 	// define route
 	public void defineRoute(Vehicle vehicle, Route route) {
 		
+		EntityTransaction t = em.getTransaction();
+
 		try {
+
+				t.begin();
+
+				Query query = em.createQuery("UPDATE Vehicle v SET v.route = :route WHERE v.id = :vehicleId");
+				query.setParameter("route", route);
+				query.setParameter("vehicleId", vehicle.getId());
+
+				int routeUpdate = query.executeUpdate();
+
+				t.commit();
+
 			System.out.println(
 					(vehicle.getRoute() == null) ? "Rotta assegnata con successo" : "Rotta modificata con successo");
-			vehicle.setRoute(route);
+			
 			
 		} catch (Exception ex) {
 			System.err.println("Errore durante la definizione della rotta: " + ex.getMessage());
 		}
+
 	}
 }
