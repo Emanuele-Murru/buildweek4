@@ -19,7 +19,7 @@ import lombok.Setter;
 
 public class Pass extends Ticket {
 
-	@OneToOne(mappedBy = "pass")
+	@OneToOne
 	private User user;
 
 	@Enumerated(EnumType.STRING)

@@ -5,6 +5,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import entities.Daily;
+import entities.Vehicle;
 
 public class DailyDAO {
 	private final EntityManager em;
@@ -25,11 +26,16 @@ public class DailyDAO {
 			
 			TypedQuery<Long> query = em.createQuery("SELECT MAX (id) FROM Ticket", Long.class);
 			long id = query.getSingleResult();
-			System.out.printf("Ticket giornaliero creato/salvato id: %d\n", id);
+			System.out.printf("Ticket giornaliero generato presso %s con id: %d\n",e.getReseller().getName(), id);
 			
 		} catch (Exception ex) {
 			t.rollback();
 			System.err.println("Errore durante la creazione del ticket" + ex.getMessage());
 		}
+	}
+	
+	public Daily findById(long _id) {
+		Daily d = em.find(Daily.class, _id);
+		return d;
 	}
 }

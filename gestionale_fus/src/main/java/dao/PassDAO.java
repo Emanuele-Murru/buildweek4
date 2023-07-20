@@ -49,7 +49,7 @@ public class PassDAO {
 
 	public Pass findPassByUserId(long id) {
 		try {
-			TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE user.id = :id", Pass.class);
+			TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.user.id = :id", Pass.class);
 			query.setParameter("id", id);
 			return query.getSingleResult();
 		} catch (Exception e) {
@@ -95,7 +95,8 @@ public class PassDAO {
 			try {
 		        t.begin();
 
-		        Query query = em.createQuery("UPDATE Pass p SET p.subType = :subType WHERE p.id = :passId");
+		        Query query = em.createQuery("UPDATE Pass p SET p.subType = :subType, p.expireDateSub = :expireDateSub WHERE p.id = :passId");
+		        query.setParameter("expireDateSub", (type.equals(SubscriptionType.Weekly.toString()))? LocalDate.now().plusWeeks(1) : LocalDate.now().plusMonths(1));
 		        query.setParameter("subType", SubscriptionType.valueOf(type));
 		        query.setParameter("passId", passId);
 

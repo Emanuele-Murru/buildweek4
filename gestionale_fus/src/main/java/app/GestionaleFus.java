@@ -77,7 +77,8 @@ public class GestionaleFus {
 						System.out.println("Quale operazione vuoi effettuare?");
 						System.out.println("1 - Crea nuovo utente");
 						System.out.println("2 - Accedi");
-						System.out.println("3 - Crea biglietto giornaliero\n");
+						System.out.println("3 - Crea biglietto giornaliero");
+						System.out.println("4 - Oblitera biglietto giornaliero\n");
 						System.out.println("0 - Torna al menù");
 						
 						c2 = Integer.parseInt(scanner.nextLine());
@@ -233,6 +234,15 @@ public class GestionaleFus {
 								default:
 									System.err.println("Comando non valido.");
 									break;
+								case 4:
+									System.out.print("Inserire id biglietto da validare: ");
+									long _idDaily = Long.parseLong(scanner.nextLine());
+									System.out.println();
+									System.out.print("Inserire id veicolo avvenuta timbratura: ");
+									long _idV = Long.parseLong(scanner.nextLine());
+									vehicleDAO.validateDaily(dailyDAO.findById(_idDaily), vehicleDAO.findById(_idV), LocalDate.now());
+									System.out.println();
+									break;
 							}
 							
 						}
@@ -337,16 +347,58 @@ public class GestionaleFus {
 								
 								break;
 							case 2:
-								System.out.println("Quale operazione vuoi effettuare?");
-								System.out.println("1 - Stampa numero totale biglietti e abbonamenti emessi di un reseller");
-								System.out.println("2 - Stampa numero biglietti e abbonamenti di un reseller in un periodo");
-								System.out.println("3 - Attiva/Disattiva un rivenditore automatico");
-								System.out.println("4 - ");
+								int dadegi = 0;
+								do {
+									System.out.println("Quale operazione vuoi effettuare?");
+									System.out.println("1 - Stampa numero totale biglietti obliterati da un veicolo");
+									System.out.println("2 - Stampa numero totale biglietti obliterati in un periodo");
+									System.out.println("3 - Stampa numero biglietti e abbonamenti di un reseller in un periodo");
+									System.out.println("4 - Manda un veicolo in Servizio/Manutenzione");
+									System.out.println("5 - Percorri tratta con un veicolo");
+									System.out.println("0 - Torna al menù");
+									
+									dadegi = Integer.parseInt(scanner.nextLine());
+									
+									System.out.println();
+									
+									switch(dadegi) {
+										case 1:
+											System.out.println("Inserisci id veicolo: ");
+											long _idVehicle = Long.parseLong(scanner.nextLine());
+											System.out.println();
+											System.out.printf("Biglietti emessi dal veicolo selezionato: %d\n", vehicleDAO.obliteratedDaily(vehicleDAO.findById(_idVehicle)));
+											System.out.println();
+											break;
+										case 2:
+											break;
+										case 3:
+											System.out.print("Seleziona reseller: ");
+											long _idReseller = Long.parseLong(scanner.nextLine());
+											System.out.println();
+											System.out.print("Inserire data di inizio (yyyy-mm-dd): ");
+											String _start = scanner.nextLine();
+											System.out.print("Inserire data di fine (yyyy-mm-dd): ");
+											String _end = scanner.nextLine();
+											System.out.println();
+											System.out.printf("Quantità biglietti e abbonamenti emessi da %s nel periodo selezionato: %d",
+													resellerDAO.findById(_idReseller).getName(),resellerDAO.getResellerTicketsByTime(resellerDAO.findById(_idReseller),
+															LocalDate.parse(_start), LocalDate.parse(_end)).size() );
+											System.out.println("\n");
+											System.out.print("Premi invio per effettuare altre operazioni");
+											scanner.nextLine();
+											System.out.println("\n");	
+											break;
+										case 4:
+											break;
+										case 5:
+											break;
+										
+									}
+									
+									
+								}while(dadegi != 0);
 								
 								
-								c5 = Integer.parseInt(scanner.nextLine());
-								
-								System.out.println();
 								break;
 							default:
 								System.err.println("Comando non valido.");

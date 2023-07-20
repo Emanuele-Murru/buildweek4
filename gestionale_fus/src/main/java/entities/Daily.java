@@ -3,6 +3,8 @@ package entities;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,9 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class Daily extends Ticket {
+	
+	@ManyToOne
+	private Vehicle vehicle;
 
 	private LocalDate obliterateDate = null;
 	private LocalDate expiryDate;

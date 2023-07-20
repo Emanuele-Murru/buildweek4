@@ -29,10 +29,10 @@ public class Vehicle {
 	@Enumerated(EnumType.STRING)
 	private VehicleType type;
 
-	@OneToMany(mappedBy = "vehicle")
+	@OneToMany
 	private Set<Ticket> tickets;
 
-	@OneToMany(mappedBy = "vehicle")
+	@OneToMany
 	private Set<VehicleStatusUpdate> history;
 
 	private int capacity;

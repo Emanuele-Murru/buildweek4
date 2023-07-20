@@ -50,18 +50,19 @@ public class VehicleDAO {
 	}
 
 	// validate daily ticket
-	public void validateDaily(Daily daily, LocalDate obliterateDate) {
+	public void validateDaily(Daily daily, Vehicle vehicle, LocalDate obliterateDate) {
 
-		if (daily.getObliterateDate() != null) {
+		if (daily.getObliterateDate() == null) {
 
 			if (daily.getExpiryDate() != obliterateDate && daily.getExpiryDate().isAfter(obliterateDate)) {
 
 				EntityTransaction t = em.getTransaction();
 				try {
 					t.begin();
-					Query q = em.createQuery("UPDATE Daily d SET d.obliterateDate = :obliterateDate WHERE d.id = :id");
+					Query q = em.createQuery("UPDATE Daily d SET d.obliterateDate = :obliterateDate, d.vehicle = :vehicle WHERE d.id = :id");
 					q.setParameter("obliterateDate", obliterateDate);
-					q.setParameter("daily.id", daily.getId());
+					q.setParameter("vehicle", vehicle);
+					q.setParameter("id", daily.getId());
 
 					q.executeUpdate();
 
