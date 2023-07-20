@@ -64,11 +64,11 @@ public class PassDAO {
 
 		TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.id = :id", Pass.class);
 
-		Pass pass = query.getResultList().get(0);
+		//Pass pass = query.getResultList().get(0);
 
 		EntityTransaction t = em.getTransaction();
 
-		if (pass.getSubType() == null) {
+		//if (pass.getSubType() == null) {
 
 			t.begin();
 			Query q = em.createQuery(
@@ -85,7 +85,7 @@ public class PassDAO {
 
 			System.out.printf("Tipo di abbonamento aggiornato con successo a %s.\n", type);
 
-		}
+		//}
 	}
 
 	public void checkSubType(Pass pass) {

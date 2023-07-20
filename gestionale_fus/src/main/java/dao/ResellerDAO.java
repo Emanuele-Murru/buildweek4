@@ -21,7 +21,7 @@ public class ResellerDAO {
 	public List<Ticket> getResellerTicketsByTime(Reseller _reseller, LocalDate _startDate, LocalDate _endDate) {
 
 		TypedQuery<Ticket> query = em.createQuery(
-				"SELECT t FROM Ticket t WHERE t.reseller = :_reseller AND t.issueDate >= :_startDate AND t.issueDat <= :_endDate",
+				"SELECT t FROM Ticket t WHERE t.reseller = :_reseller AND t.issueDate >= :_startDate AND t.issueDate <= :_endDate",
 				Ticket.class).setParameter("_reseller", _reseller).setParameter("_startDate", _startDate)
 				.setParameter("_endDate", _endDate);
 
