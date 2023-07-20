@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import entities.Pass;
 import entities.User;
 
 public class UserDAO {
@@ -44,5 +45,9 @@ public class UserDAO {
 
 		} else
 			System.out.println("Utente non trovato");
+	}
+
+	public void assignPass(long userId, Pass pass) {
+
 	}
 }
