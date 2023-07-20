@@ -3,6 +3,7 @@ package dao;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import entities.AutoReseller;
 
@@ -20,7 +21,10 @@ public class AutoResellerDAO {
 			et.begin();
 			em.persist(_autoReseller);
 			et.commit();
-			System.out.println("Distributore automatico salvato con successo");
+			
+			TypedQuery<Long> query = em.createQuery("SELECT MAX (id) FROM Reseller", Long.class);
+			long id = query.getSingleResult();
+			System.out.printf("Il distributore '%s' è stato creato con id: %d\n", _autoReseller.getName(), id);
 		} catch (Exception ex) {
 			et.rollback();
 			System.err.println("Errore durante il salvataggio del distributore automatico:" + ex.getMessage());

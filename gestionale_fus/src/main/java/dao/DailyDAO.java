@@ -2,6 +2,7 @@ package dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import entities.Daily;
 
@@ -21,7 +22,10 @@ public class DailyDAO {
 			em.persist(e);
 
 			t.commit();
-			System.out.println("Ticket giornaliero creato/salvato con successo");
+			
+			TypedQuery<Long> query = em.createQuery("SELECT MAX (id) FROM Ticket", Long.class);
+			long id = query.getSingleResult();
+			System.out.printf("Ticket giornaliero creato/salvato id: %d\n", id);
 			
 		} catch (Exception ex) {
 			t.rollback();

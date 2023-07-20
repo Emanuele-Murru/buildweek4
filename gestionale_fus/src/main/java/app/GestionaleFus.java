@@ -20,7 +20,9 @@ import entities.AutoReseller;
 import entities.Daily;
 import entities.Pass;
 import entities.User;
+import entities.Vehicle;
 import enums.AutoResellerStatus;
+import enums.VehicleType;
 import utils.JpaUtil;
 
 public class GestionaleFus {
@@ -50,6 +52,7 @@ public class GestionaleFus {
 		DailyDAO dailyDAO = new DailyDAO(em);
 		UserDAO userDAO = new UserDAO(em);
 		PassDAO passDAO = new PassDAO(em);
+		VehicleDAO vehicleDAO = new VehicleDAO(em);
 		
 		// MAIN MENU------------------------------------------------------------------------
 		
@@ -207,7 +210,13 @@ public class GestionaleFus {
 									// ---------------------------------------------------------------CREATE DAILY TICKET
 									System.out.print("Dove stai creando il biglietto: ");
 									long _idReseller = Long.parseLong(scanner.nextLine());
+									System.out.println();
 									dailyDAO.createDailyTicket(new Daily(LocalDate.now(), resellerDAO.findById(_idReseller)));
+									System.out.println();
+									System.out.println();
+									System.out.print("Premi invio per effettuare altre operazioni");
+									scanner.nextLine();
+									System.out.println("\n");
 									break;
 								
 								default:
@@ -222,7 +231,7 @@ public class GestionaleFus {
 					case 2:
 						System.out.println("Scegli sezione");
 						System.out.println("1 - Creazione");
-						System.out.println("2 - Gestione");
+						System.out.println("2 - Gestione\n");
 						System.out.println("0 - Torna al menù");
 						
 						c4 = Integer.parseInt(scanner.nextLine());
@@ -240,17 +249,17 @@ public class GestionaleFus {
 								System.out.println();
 								switch(c5) {
 									case 1:
-										int i = 0;
+										int i1 = 0;
 
 										System.out.println("Scegliere tipologia reseller");
 										System.out.println("1 - Automatico");
 										System.out.println("2 - Autorizzato");
 										
-										i = Integer.parseInt(scanner.nextLine());
+										i1 = Integer.parseInt(scanner.nextLine());
 										
 										System.out.println();
 										
-										switch(i) {
+										switch(i1) {
 											case 1:
 												System.out.print("Definire il nome del reseller: ");
 												String _autoResellerName = scanner.nextLine();
@@ -272,6 +281,32 @@ public class GestionaleFus {
 										System.out.println("\n");	
 										break;
 									case 2:
+										int i2 = 0;
+
+										System.out.println("Scegliere tipologia di mezzo");
+										System.out.println("1 - Bus");
+										System.out.println("2 - Tram");
+										
+										i2 = Integer.parseInt(scanner.nextLine());
+										
+										System.out.println();
+										
+										switch(i2) {
+											case 1:
+												System.out.println();
+												vehicleDAO.saveVehicle(new Vehicle(VehicleType.Bus));
+												System.out.println();
+												break;
+											case 2:
+												System.out.println();
+												vehicleDAO.saveVehicle(new Vehicle(VehicleType.Tram));
+												System.out.println();
+												break;
+										}
+										System.out.println();
+										System.out.print("Premi invio per effettuare altre operazioni");
+										scanner.nextLine();
+										System.out.println("\n");
 										break;
 									case 3:
 										break;

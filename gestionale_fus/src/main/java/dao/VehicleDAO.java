@@ -34,8 +34,9 @@ public class VehicleDAO {
 
 			t.commit();
 
-			System.out.println((vehicle.getType().equals(VehicleType.Bus)) ? "Bus salvato con successo"
-					: "Tram salvato con successo");
+			TypedQuery<Long> query = em.createQuery("SELECT MAX (id) FROM Vehicle", Long.class);
+			long id = query.getSingleResult();
+			System.out.printf(((vehicle.getType().equals(VehicleType.Bus)) ? "Bus salvato con successo" : "Tram salvato con successo") + " con id : %d\n", id);
 
 		} catch (Exception ex) {
 			t.rollback();

@@ -23,7 +23,7 @@ import lombok.Setter;
 public class Vehicle {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private long id;
 
 	@Enumerated(EnumType.STRING)

@@ -2,6 +2,7 @@ package dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import entities.AuthorizedReseller;
 
@@ -19,7 +20,10 @@ public class AuthorizedResellerDAO {
 			et.begin();
 			em.persist(_authorizedReseller);
 			et.commit();
-			System.out.println("Rivenditore autorizzato salvato correttamente");
+			
+			TypedQuery<Long> query = em.createQuery("SELECT MAX (id) FROM Reseller", Long.class);
+			long id = query.getSingleResult();
+			System.out.printf("Il rivenditore '%s' è stato autorizzato con id: %d\n", _authorizedReseller.getName(), id);
 		} catch (Exception ex) {
 			et.rollback();
 		}
