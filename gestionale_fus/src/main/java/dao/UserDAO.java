@@ -17,18 +17,29 @@ public class UserDAO {
 	// - - - - - - - - - - - - - - - - - - - - save
 	public void save(User _user) {
 		EntityTransaction et = em.getTransaction();
-		et.begin();
-		em.persist(_user);
-		et.commit();
+		try {
+			et.begin();
+			em.persist(_user);
+			et.commit();
 
-		TypedQuery<Long> query = em.createQuery("SELECT MAX (id) FROM User", Long.class);
-		long id = query.getSingleResult();
-		System.out.printf("L'utente %s %s è stato salvato con id: %d\n", _user.getName(), _user.getSurname(), id);
+			TypedQuery<Long> query = em.createQuery("SELECT MAX (id) FROM User", Long.class);
+			long id = query.getSingleResult();
+			System.out.printf("L'utente %s %s è stato salvato con id: %d\n", _user.getName(), _user.getSurname(), id);
+		} catch (Exception ex) {
+			et.rollback();
+			System.err.println("Errore durante il salvataggio dell'utente: " + ex.getMessage());
+		}
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - findById
 	public User findById(long _id) {
-		User du = em.find(User.class, _id);
+		User du = null;
+
+		try {
+			du = em.find(User.class, _id);
+		} catch (Exception ex) {
+			System.err.println("Errore durante il recupero dell'utente con ID: " + _id + ": " + ex.getMessage());
+		}
 		return du;
 	}
 
@@ -37,9 +48,14 @@ public class UserDAO {
 		User du = em.find(User.class, _id);
 		if (du != null) {
 			EntityTransaction et = em.getTransaction();
-			et.begin();
-			em.remove(du);
-			et.commit();
+			try {
+				et.begin();
+				em.remove(du);
+				et.commit();
+			} catch (Exception ex) {
+				et.rollback();
+				System.err.println("Errore durante l'eliminazione dell'utente con ID " + _id + ": " + ex.getMessage());
+			}
 
 		} else
 			System.out.println("Utente non trovato");

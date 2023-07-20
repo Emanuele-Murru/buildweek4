@@ -16,10 +16,15 @@ public class AutoResellerDAO {
 
 	public void save(AutoReseller _autoReseller) {
 		EntityTransaction et = em.getTransaction();
-		et.begin();
-		em.persist(_autoReseller);
-		et.commit();
-		System.out.println("Distributore automatico salvato con successo");
+		try {
+			et.begin();
+			em.persist(_autoReseller);
+			et.commit();
+			System.out.println("Distributore automatico salvato con successo");
+		} catch (Exception ex) {
+			et.rollback();
+			System.err.println("Errore durante il salvataggio del distributore automatico:" + ex.getMessage());
+		}
 	}
 
 	public AutoReseller findById(long _id) {
@@ -31,27 +36,39 @@ public class AutoResellerDAO {
 		AutoReseller dar = em.find(AutoReseller.class, _id);
 		if (dar != null) {
 			EntityTransaction entityTransaction = em.getTransaction();
-			entityTransaction.begin();
-			em.remove(dar);
-			entityTransaction.commit();
-
-		} else System.out.println("Distributore automatico non trovato");
+			try {
+				entityTransaction.begin();
+				em.remove(dar);
+				entityTransaction.commit();
+			} catch (Exception ex) {
+				entityTransaction.rollback();
+				System.err.println("Errore durante la rimozione del distributore automatico: " + ex.getMessage());
+			}
+		} else
+			System.out.println("Distributore automatico non trovato");
 	}
 
 	public void changeStatus(long _id, String _status) {
 		AutoReseller dar = em.find(AutoReseller.class, _id);
 		if (dar != null) {
 			EntityTransaction et = em.getTransaction();
-			et.begin();
+			try {
+				et.begin();
 
-			Query query = em.createQuery("UPDATE AutoReseller a SET a.status = :_status WHERE a.id = :_id")
-					.setParameter("_status", _status);
+				Query query = em.createQuery("UPDATE AutoReseller a SET a.status = :_status WHERE a.id = :_id")
+						.setParameter("_status", _status);
 
-			query.executeUpdate();
+				query.executeUpdate();
 
-			et.commit();
-			System.out.println("Lo stato del distributore automatico è stato aggiornato con successo");
+				et.commit();
+				System.out.println("Lo stato del distributore automatico è stato aggiornato con successo");
 
-		} else System.out.println("Distributore automatico non trovato");
+			} catch (Exception ex) {
+				et.rollback();
+				System.err.println(
+						"Errore durante l'aggiornamento dello stato del distributore automatico: " + ex.getMessage());
+			}
+		} else
+			System.out.println("Distributore automatico non trovato");
 	}
 }

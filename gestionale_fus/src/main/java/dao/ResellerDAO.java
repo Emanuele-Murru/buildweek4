@@ -24,8 +24,12 @@ public class ResellerDAO {
 				"SELECT t FROM Ticket t WHERE t.reseller = :_reseller AND t.issueDate >= :_startDate AND t.issueDat <= :_endDate",
 				Ticket.class).setParameter("_reseller", _reseller).setParameter("_startDate", _startDate)
 				.setParameter("_endDate", _endDate);
-
-		return query.getResultList();
+		try {
+			return query.getResultList();
+		} catch (Exception ex) {
+			System.err.println("Errore durante la ricerca dei biglietti del rivenditore: " + ex.getMessage());
+			return null;
+		}
 	}
 
 }

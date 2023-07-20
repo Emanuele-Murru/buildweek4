@@ -20,10 +20,17 @@ public class TripDAO {
 
 	public void save(Route route) {
 		EntityTransaction et = em.getTransaction();
-		et.begin();
-		em.persist(route);
-		et.commit();
-		System.out.println("Utente salvato correttamente");
+
+		try {
+			et.begin();
+			em.persist(route);
+			et.commit();
+			System.out.println("Utente salvato correttamente");
+
+		} catch (Exception ex) {
+			et.rollback();
+			System.err.println("Errore durante il salvataggio del viaggio: " + ex.getMessage());
+		}
 	}
 
 	// total trip per vehicle
@@ -37,7 +44,7 @@ public class TripDAO {
 		TypedQuery<Trip> query2 = em.createQuery("SELECT t.tripTime FROM Trip t WHERE t.vehicle = :_vehicle",
 				Trip.class);
 		query.setParameter("_vehicle", _vehicle);
-
+		
 		List<Trip> trips = query.getResultList();
 		List<Trip> times = query2.getResultList();
 

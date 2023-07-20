@@ -15,12 +15,17 @@ public class DailyDAO {
 	public void createDailyTicket(Daily e) {
 		EntityTransaction t = em.getTransaction();
 
-		t.begin();
-		
-		em.persist(e);
-		
-		t.commit();
-		System.out.println("Ticket giornaliero creato/salvato con successo");
+		try {
+			t.begin();
 
+			em.persist(e);
+
+			t.commit();
+			System.out.println("Ticket giornaliero creato/salvato con successo");
+			
+		} catch (Exception ex) {
+			t.rollback();
+			System.err.println("Errore durante la creazione del ticket" + ex.getMessage());
+		}
 	}
 }

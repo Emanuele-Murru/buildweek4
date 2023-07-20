@@ -9,29 +9,49 @@ public class AuthorizedResellerDAO {
 
 	private final EntityManager em;
 
-	public AuthorizedResellerDAO(EntityManager _entityManager) {this.em = _entityManager;}
+	public AuthorizedResellerDAO(EntityManager _entityManager) {
+		this.em = _entityManager;
+	}
 
 	public void save(AuthorizedReseller _authorizedReseller) {
 		EntityTransaction et = em.getTransaction();
-		et.begin();
-		em.persist(_authorizedReseller);
-		et.commit();
-		System.out.println("Rivenditore autorizzato salvato correttamente");
+		try {
+			et.begin();
+			em.persist(_authorizedReseller);
+			et.commit();
+			System.out.println("Rivenditore autorizzato salvato correttamente");
+		} catch (Exception ex) {
+			et.rollback();
+		}
+
 	}
 
 	public AuthorizedReseller findById(long _id) {
-		AuthorizedReseller dar = em.find(AuthorizedReseller.class, _id);
-		return dar;
+		try {
+			AuthorizedReseller dar = em.find(AuthorizedReseller.class, _id);
+			return dar;
+		} catch (Exception ex) {
+			System.err.println("Errore durante la ricerca del rivenditore autorizzato per ID: " + ex.getMessage());
+			return null;
+		}
 	}
 
 	public void findByIdAndDelete(long _id) {
-		AuthorizedReseller dar = em.find(AuthorizedReseller.class, _id);
-		if (dar != null) {
-			EntityTransaction et = em.getTransaction();
-			et.begin();
-			em.remove(dar);
-			et.commit();
+		EntityTransaction et = em.getTransaction();
 
-		} else System.out.println("Rivenditore autorizzato non trovato");
+		try {
+			AuthorizedReseller dar = em.find(AuthorizedReseller.class, _id);
+			if (dar != null) {
+				et.begin();
+				em.remove(dar);
+				et.commit();
+
+			} else {
+				System.err.println("Rivenditore autorizzato non trovato");
+			}
+		} catch (Exception ex) {
+			et.rollback();
+			System.out.println("Errore durante la rimozione del rivenditore autorizzato:" + ex.getMessage());
+		}
 	}
 }
