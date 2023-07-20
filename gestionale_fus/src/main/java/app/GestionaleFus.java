@@ -65,7 +65,8 @@ public class GestionaleFus {
 						
 						System.out.println("Quale operazione vuoi effettuare?");
 						System.out.println("1 - Crea nuovo utente");
-						System.out.println("2 - Accedi\n");
+						System.out.println("2 - Accedi");
+						System.out.println("3 - Crea biglietto giornaliero\n");
 						System.out.println("0 - Torna al menù");
 						
 						c2 = Integer.parseInt(scanner.nextLine());
@@ -143,6 +144,7 @@ public class GestionaleFus {
 															System.err.println("Nessuna tessera registrata presso questo utente.");
 														break;
 													case 4:
+														System.out.println();
 														if(_actualUser.getPass() != null) {
 															if(_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear()){
 																passDAO.renewalPass(passDAO.findPassByUserId(_actualUser));
@@ -150,12 +152,13 @@ public class GestionaleFus {
 																System.err.println("Tessera ancora valida, non è necessario rinnovare.");
 														}else
 															System.err.println("Nessuna tessera registrata presso questo utente.");
-														System.out.println();
+														
 														break;
 													case 5:
 														break;
 													case 6:
 														userDAO.findByIdAndDelete(_actualUser.getId());
+														c3 = 0;
 														break;
 													default:
 														System.out.println("Comando non valido.");
@@ -180,6 +183,10 @@ public class GestionaleFus {
 									}
 									
 								break;
+								
+								case 3:
+									// ---------------------------------------------------------------CREATE DAILY TICKET
+									break;
 								
 								default:
 									System.err.println("Comando non valido.");
