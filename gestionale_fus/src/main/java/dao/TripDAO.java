@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
-import entities.Route;
 import entities.Trip;
 import entities.Vehicle;
 
@@ -18,12 +17,17 @@ public class TripDAO {
 		this.em = _entityManager;
 	}
 
-	public void save(Route route) {
+	public void save(Trip trip) {
 		EntityTransaction et = em.getTransaction();
 		et.begin();
-		em.persist(route);
+		em.persist(trip);
 		et.commit();
-		System.out.println("Utente salvato correttamente");
+		System.out.println("Trip salvato correttamente");
+	}
+
+	public Trip findById(long _id) {
+		Trip t = em.find(Trip.class, _id);
+		return t;
 	}
 
 	// total trip per vehicle

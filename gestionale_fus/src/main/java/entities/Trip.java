@@ -13,15 +13,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Trip {
-	
+
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	private long idVehicle;
-	
+
 	private String routeName;
-	
+
 	private int tripTime;
 
 	public Trip(Vehicle vehicle, int tripTime) {
@@ -36,7 +36,4 @@ public class Trip {
 				+ "]";
 	}
 
-	
-	
-	
 }
