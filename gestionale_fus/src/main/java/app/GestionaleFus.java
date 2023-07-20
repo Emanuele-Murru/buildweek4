@@ -10,6 +10,7 @@ import dao.AutoResellerDAO;
 import dao.DailyDAO;
 import dao.PassDAO;
 import dao.RouteDAO;
+import dao.TripDAO;
 import dao.UserDAO;
 import dao.VehicleDAO;
 import entities.AuthorizedReseller;
@@ -17,6 +18,7 @@ import entities.AutoReseller;
 import entities.Daily;
 import entities.Pass;
 import entities.Route;
+import entities.Trip;
 import entities.User;
 import entities.Vehicle;
 import enums.AutoResellerStatus;
@@ -82,20 +84,23 @@ public class GestionaleFus {
 
 		// - - - - - - - - - - - - - - - DEFINEROUTE
 		vDAO.defineRoute(v1, r1);
+		vDAO.defineRoute(v2, r1);
+		vDAO.defineRoute(v3, r2);
+		vDAO.defineRoute(v4, r2);
 
 		// - - - - - - - - - - - - - - - TRIP
-//		Trip t1 = new Trip(v1, 30);
-//		TripDAO tDAO = new TripDAO(em);
-////		tDAO.save(t1);
-//
-//		Trip t2 = new Trip(v2, 20);
-////		tDAO.save(t2);
-//
-//		Trip t3 = new Trip(v3, 20);
-////		tDAO.save(t3);
-//
-//		Trip t4 = new Trip(v4, 10);
-////		tDAO.save(t4);
+		Trip t1 = new Trip(v1, r1, 30);
+		TripDAO tDAO = new TripDAO(em);
+		tDAO.save(t1);
+
+		Trip t2 = new Trip(v2, r1, 20);
+		tDAO.save(t2);
+
+		Trip t3 = new Trip(v3, r2, 20);
+		tDAO.save(t3);
+
+		Trip t4 = new Trip(v4, r2, 10);
+		tDAO.save(t4);
 
 		em.close();
 		entityManagerFactory.close();
