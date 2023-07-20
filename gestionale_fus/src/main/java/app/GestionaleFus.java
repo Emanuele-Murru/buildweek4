@@ -113,6 +113,7 @@ public class GestionaleFus {
 									System.out.println();
 									
 									User _actualUser = userDAO.findById(_idLog);
+									long _actualId = _actualUser.getId();
 									
 									if(_actualUser != null && _actualUser.getPassword().equals(_passwordLog)) {
 										
