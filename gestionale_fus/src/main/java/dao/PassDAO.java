@@ -58,34 +58,20 @@ public class PassDAO {
 			System.out.println("Tessera non trovata!");
 	}
 
-	public void editSubscription(long id, String type, LocalDate data) {
-		String subTypeString = type;
-		SubscriptionType subType = SubscriptionType.valueOf(subTypeString);
-
-		TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.id = :id", Pass.class);
-
-		Pass pass = query.getResultList().get(0);
-
+	public void editSubscription(long passId, String type, LocalDate data) {
+		
 		EntityTransaction t = em.getTransaction();
+		t.begin();
 
-		if (pass.getSubType() == null) {
+		Query query = em.createQuery("UPDATE Pass p SET p.subType = :subType WHERE p.id = :passId");
+		query.setParameter("subType", SubscriptionType.valueOf(type));
+		query.setParameter("passId", passId);
 
-			t.begin();
-			Query q = em.createQuery(
-					"UPDATE Pass p SET subType = :subType, expireDateSub = :expireDateSub WHERE p.id = :id");
+		query.executeUpdate();
 
-			q.setParameter("subType", subType);
-			q.setParameter("expireDateSub",
-					subType.equals(SubscriptionType.Weekly) ? data.plusWeeks(1) : data.plusMonths(1));
-			q.setParameter("id", id);
-
-			q.executeUpdate();
-
-			t.commit();
-
-			System.out.printf("Abbonamento aggiornato con successo a %s.\n", type);
-
-		}
+		t.commit();
+		
+		System.out.printf("Abbonamento aggiornato con successo a %s.\n", type);
 	}
 
 	public void checkSubType(Pass pass) {
