@@ -28,4 +28,9 @@ public class ResellerDAO {
 		return query.getResultList();
 	}
 
+	public Reseller findById(long _id) {
+		Reseller ar = em.find(Reseller.class, _id);
+		return ar;
+	}
+
 }
