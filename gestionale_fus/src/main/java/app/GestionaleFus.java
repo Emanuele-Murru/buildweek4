@@ -91,7 +91,10 @@ public class GestionaleFus {
 								long _id = Long.parseLong(scanner.nextLine());
 								System.out.println();
 								System.out.println(user.findById(_id).toString()); 
-								System.out.println("\n");
+								System.out.println();
+								System.out.print("Premi qualsiasi tasto per tornare al menù");
+								scanner.nextLine();
+								System.out.println("\n");								
 								break;
 						}
 					}
