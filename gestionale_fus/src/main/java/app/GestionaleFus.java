@@ -101,6 +101,9 @@ public class GestionaleFus {
 									System.out.println();
 									userDAO.save(new User(_name, _surname, _password, LocalDate.parse(_birth), _birthPlace));
 									System.out.println();
+									System.out.print("Premi invio per effettuare altre operazioni");
+									scanner.nextLine();
+									System.out.println("\n");
 									break;
 									
 								case 2:
@@ -111,11 +114,8 @@ public class GestionaleFus {
 									String _passwordLog = scanner.nextLine();
 									
 									System.out.println();
-									
-									User _actualUser = userDAO.findById(_idLog);
-									long _actualId = _actualUser.getId();
-									
-									if(_actualUser != null && _actualUser.getPassword().equals(_passwordLog)) {
+																		
+									if(userDAO.findById(_idLog) != null && userDAO.findById(_idLog).getPassword().equals(_passwordLog)) {
 										
 										do {
 											System.out.println("Quale operazione vuoi effettuare?");
@@ -134,22 +134,22 @@ public class GestionaleFus {
 											if(c3 != 0) {
 												switch(c3) {
 													case 1:
-														System.out.println(_actualUser.toString());
+														System.out.println(userDAO.findById(_idLog).toString());
 														break;
 													case 2:
-														if(_actualUser.getPass() == null) {
+														if(userDAO.findById(_idLog).getPass() == null) {
 															System.out.print("Dove stai creando la tessera: ");
 															long _idReseller = Long.parseLong(scanner.nextLine());
 															System.out.println();
 															// pass creation
-															Pass localPass = new Pass(LocalDate.now(), resellerDAO.findById(_idReseller), _actualUser);
+															Pass localPass = new Pass(LocalDate.now(), resellerDAO.findById(_idReseller), userDAO.findById(_idLog));
 															passDAO.savePass(localPass);
 															System.out.println();
 															// assign to user
-															userDAO.assignPass(_actualUser.getId(), passDAO.findById(localPass.getId()));
+															userDAO.assignPass(userDAO.findById(_idLog).getId(), passDAO.findById(localPass.getId()));
 															System.out.println();
 														}else {
-															if(_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear())
+															if(userDAO.findById(_idLog).getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear())
 																System.err.println("Tessera già presente e in corso di validità.");
 															else
 																System.err.println("Tessera già presente, ma scaduta. Effettuare rinnovo.");
@@ -157,16 +157,16 @@ public class GestionaleFus {
 							
 														break;
 													case 3:
-														if(_actualUser.getPass() != null)
-															System.out.println((_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear()) ? "Tessera Valida" : "Tessera scaduta");
+														if(userDAO.findById(_idLog).getPass() != null)
+															System.out.println((userDAO.findById(_idLog).getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear()) ? "Tessera Valida" : "Tessera scaduta");
 														else
 															System.err.println("Nessuna tessera registrata presso questo utente.");
 														break;
 													case 4:
 														System.out.println();
-														if(_actualUser.getPass() != null) {
-															if(_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear()){
-																passDAO.renewalPass(passDAO.findPassByUserId(_actualUser));
+														if(userDAO.findById(_idLog).getPass() != null) {
+															if(userDAO.findById(_idLog).getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear()){
+																passDAO.renewalPass(passDAO.findPassByUserId(_idLog));
 															}else
 																System.err.println("Tessera ancora valida, non è necessario rinnovare.");
 														}else
@@ -174,14 +174,14 @@ public class GestionaleFus {
 														
 														break;
 													case 5:
-														if(_actualUser.getPass() != null) {
-															if(_actualUser.getPass().getSubType() == null) {
+														if(userDAO.findById(_idLog).getPass() != null) {
+															if(userDAO.findById(_idLog).getPass().getSubType() == null) {
 																System.out.print("Scegliere il tipo di abbonamento da sottoscrivere (Weekly/Monthly): ");
 																String sub = scanner.nextLine();
-																passDAO.editSubscription(_actualUser.getPass().getId(), sub, LocalDate.now());
+																passDAO.editSubscription(userDAO.findById(_idLog).getPass().getId(), sub, LocalDate.now());
 																System.out.println();
 															}else {
-																System.err.printf("La tessera presenta un abbonamento %s in corso.\n", _actualUser.getPass().getSubType().toString());
+																System.err.printf("La tessera presenta un abbonamento %s in corso.\n", userDAO.findById(_idLog).getPass().getSubType().toString());
 																System.err.println("Attendere la fine dell'abbonamento corrente per rinnovare.");
 															}
 														}else
@@ -190,7 +190,7 @@ public class GestionaleFus {
 														
 														break;
 													case 6:
-														userDAO.findByIdAndDelete(_actualUser.getId());
+														userDAO.findByIdAndDelete(userDAO.findById(_idLog).getId());
 														c3 = 0;
 														break;
 													default:

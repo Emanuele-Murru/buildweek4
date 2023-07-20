@@ -37,7 +37,7 @@ public class Pass extends Ticket {
 	@Override
 	public String toString() {
 		return "Ticket [ID Biglietto =" + this.getId() + ", Data di emissione =" + this.getIssueDate()
-				+ ", Rivenditore = " + this.getReseller() + "ID User =" + user + ", Tipo di abbonamento =" + subType
+				+ ", Rivenditore = " + this.getReseller() + "ID User =" + this.user.getId() + ", Tipo di abbonamento =" + subType
 				+ ", Data scadenza abbonamento =" + expireDateSub + ", Data scadenza Tessera =" + expiryDatePass;
 	}
 

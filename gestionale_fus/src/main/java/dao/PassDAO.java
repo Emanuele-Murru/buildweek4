@@ -47,13 +47,13 @@ public class PassDAO {
 		}
 	}
 
-	public Pass findPassByUserId(User user) {
+	public Pass findPassByUserId(long id) {
 		try {
-			TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.user.id = :id", Pass.class);
-			query.setParameter("id", user.getId());
+			TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE user.id = :id", Pass.class);
+			query.setParameter("id", id);
 			return query.getSingleResult();
 		} catch (Exception e) {
-			System.out.println("Errore durante la ricerca della tessera per l'utente: " + e.getMessage());
+			System.err.println("Errore durante la ricerca della tessera per l'utente: " + e.getMessage());
 			return null;
 		}
 	}

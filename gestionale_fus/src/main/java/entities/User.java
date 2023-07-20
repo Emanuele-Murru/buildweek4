@@ -45,7 +45,7 @@ public class User {
 	@Override
 	public String toString() {
 		String passId = "none";
-		if(pass != null) passId = Long.toString(pass.getId());
+		if(this.pass != null) passId = Long.toString(this.pass.getId());
 		return "Dati utente " + Long.toString(this.getId()) + " [" + name + ", " + surname + ", " + birthDate + ", " + birthPlace + ", Pass id: " + passId + "]";
 	}
 
