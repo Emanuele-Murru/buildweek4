@@ -57,7 +57,7 @@ public class UserDAO {
 		query.setParameter("pass", pass);
 		query.setParameter("userId", userId);
 
-		int passUpdate = query.executeUpdate();
+		query.executeUpdate();
 
 		t.commit();
 
