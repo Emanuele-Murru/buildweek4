@@ -99,8 +99,29 @@ public class VehicleDAO {
 
 	// define route
 	public void defineRoute(Vehicle vehicle, Route route) {
+
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+
+		Query query = em.createQuery("UPDATE Vehicle v SET v.route = :route WHERE v.id = :vehicleId");
+		query.setParameter("route", route);
+		query.setParameter("vehicleId", vehicle.getId());
+
+		int routeUpdate = query.executeUpdate();
+
+		t.commit();
+
+//		if (routeUpdate > 0) {
+//			System.out.println("Rotta assegnata con successo");
+//		} else {
+//			System.out.println("Rotta non assegnata: vehicle non trovato o route non valida");
+//		}
+
 		System.out.println(
-				(vehicle.getRoute() == null) ? "Rotta assegnata con successo" : "Rotta modificata con successo");
-		vehicle.setRoute(route);
+				(routeUpdate > 0) ? "Rotta assegnata con successo" : "Veicolo non trovato e/o rotta non valida");
+
+//		System.out.println(
+//				(vehicle.getRoute() == null) ? "Rotta assegnata con successo" : "Rotta modificata con successo");
+//		vehicle.setRoute(route);
 	}
 }

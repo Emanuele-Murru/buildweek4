@@ -10,7 +10,6 @@ import dao.AutoResellerDAO;
 import dao.DailyDAO;
 import dao.PassDAO;
 import dao.RouteDAO;
-import dao.TripDAO;
 import dao.UserDAO;
 import dao.VehicleDAO;
 import entities.AuthorizedReseller;
@@ -18,7 +17,6 @@ import entities.AutoReseller;
 import entities.Daily;
 import entities.Pass;
 import entities.Route;
-import entities.Trip;
 import entities.User;
 import entities.Vehicle;
 import enums.AutoResellerStatus;
@@ -62,42 +60,42 @@ public class GestionaleFus {
 		// - - - - - - - - - - - - - - - ROUTE
 		Route r1 = new Route("First Route", "First Start", "First Terminal");
 		RouteDAO rDAO = new RouteDAO(em);
-		// rDAO.save(r1);
+		rDAO.save(r1);
 		Route r2 = new Route("Second Route", "Second Start", "Second Terminal");
-		// rDAO.save(r2);
+		rDAO.save(r2);
 		Route r3 = new Route("Third Route", "Third Start", "Third Terminal");
-		// rDAO.save(r3);
+		rDAO.save(r3);
 
 		// - - - - - - - - - - - - - - - VEHICLE
 		Vehicle v1 = new Vehicle(VehicleType.Bus);
 		VehicleDAO vDAO = new VehicleDAO(em);
-//		vDAO.saveVehicle(v1);
+		vDAO.saveVehicle(v1);
 
 		Vehicle v2 = new Vehicle(VehicleType.Tram);
-//		vDAO.saveVehicle(v2);
+		vDAO.saveVehicle(v2);
 
 		Vehicle v3 = new Vehicle(VehicleType.Bus);
-//		vDAO.saveVehicle(v3);
+		vDAO.saveVehicle(v3);
 
 		Vehicle v4 = new Vehicle(VehicleType.Tram);
-//		vDAO.saveVehicle(v4);
+		vDAO.saveVehicle(v4);
 
 		// - - - - - - - - - - - - - - - DEFINEROUTE
 		vDAO.defineRoute(v1, r1);
 
 		// - - - - - - - - - - - - - - - TRIP
-		Trip t1 = new Trip(v1, 30);
-		TripDAO tDAO = new TripDAO(em);
-//		tDAO.save(t1);
-
-		Trip t2 = new Trip(v2, 20);
-//		tDAO.save(t2);
-
-		Trip t3 = new Trip(v3, 20);
-//		tDAO.save(t3);
-
-		Trip t4 = new Trip(v4, 10);
-//		tDAO.save(t4);
+//		Trip t1 = new Trip(v1, 30);
+//		TripDAO tDAO = new TripDAO(em);
+////		tDAO.save(t1);
+//
+//		Trip t2 = new Trip(v2, 20);
+////		tDAO.save(t2);
+//
+//		Trip t3 = new Trip(v3, 20);
+////		tDAO.save(t3);
+//
+//		Trip t4 = new Trip(v4, 10);
+////		tDAO.save(t4);
 
 		em.close();
 		entityManagerFactory.close();
