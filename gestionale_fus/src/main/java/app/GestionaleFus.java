@@ -101,35 +101,40 @@ public class GestionaleFus {
 									User _actualUser = userDAO.findById(_idLog);
 									
 									if(_actualUser.getPassword().equals(_passwordLog)) {
-										System.out.println("Quale operazione vuoi effettuare?");
-										System.out.println("1 - Visualizza i tuoi dati");
-										System.out.println("2 - Verifica validità tessera");
-										System.out.println("3 - Rinnova abbonamento");
-										System.out.println("4 - Elimina profilo\n");
-										System.out.println("0 - Log Out e torna al menù");
 										
-										c3 = Integer.parseInt(scanner.nextLine());
+										do {
+											System.out.println("Quale operazione vuoi effettuare?");
+											System.out.println("1 - Visualizza i tuoi dati");
+											System.out.println("2 - Verifica validità tessera");
+											System.out.println("3 - Rinnova abbonamento");
+											System.out.println("4 - Elimina profilo\n");
+											System.out.println("0 - Log Out e torna al menù");
+											
+											c3 = Integer.parseInt(scanner.nextLine());
+											
+											if(c3 != 0) {
+												switch(c3) {
+													case 1:
+														System.out.println(_actualUser.toString());
+														break;
+													case 2:
+														break;
+													case 3:
+														
+														break;
+													case 4:
+														userDAO.findByIdAndDelete(_actualUser.getId());
+														break;
+													default:
+														System.out.println("Comando non valido.");
+												}
+											
+											}else System.err.println("Password errata.");
+											
+										}while(c3 != 0);
 										
-										if(c3 != 0) {
-											switch(c3) {
-												case 1:
-													System.out.println(_actualUser.toString());
-													break;
-												case 2:
-													break;
-												case 3:
-													
-													break;
-												case 4:
-													userDAO.findByIdAndDelete(_actualUser.getId());
-													break;
-												default:
-													System.out.println("Comando non valido.");
-											}
-										}
-									}else System.err.println("Password errata.");
-									
-									break;
+									}
+								break;
 							}
 							
 						}
@@ -146,28 +151,6 @@ public class GestionaleFus {
 			}
 		}while(c1 != 0);
 		
-//		AutoReseller ar1 = new AutoReseller("Primo", AutoResellerStatus.ACTIVE);
-//		autoReseller.save(ar1);
-//
-//		AuthorizedReseller atzr1 = new AuthorizedReseller("PrimoAtzr");
-//		
-//		atzrDAO.save(atzr1);
-//
-//		Daily d1 = new Daily(LocalDate.of(2023, 7, 18), atzr1);
-//		
-//		dDAO.createDailyTicket(d1);
-//
-//		User u1 = new User("Mario", "Rossi", LocalDate.of(2000, 7, 18), "Milano");
-//		
-//		uDAO.save(u1);
-//
-//		Pass p1 = new Pass(LocalDate.of(2023, 7, 18), atzr1, u1);
-//		
-//		pDAO.createPassTicket(p1);
-
-		// pDAO.editSubscription(p1, "Weekly", LocalDate.of(2023, 7, 18));
-
-		// entity manager close
 		em.close();
 		entityManagerFactory.close();
 		
