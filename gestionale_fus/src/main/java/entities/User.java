@@ -32,17 +32,21 @@ public class User {
 
 	protected LocalDate birthDate;
 	protected String birthPlace;
+	protected String password;
 
-	public User(String _name, String _surname, LocalDate _birthDate, String _birthPlace) {
+	public User(String _name, String _surname, String _password, LocalDate _birthDate, String _birthPlace) {
 		this.name = _name;
 		this.surname = _surname;
+		this.password = _password;
 		this.birthDate = _birthDate;
 		this.birthPlace = _birthPlace;
 	}
 	
 	@Override
 	public String toString() {
-		return "User [" + name + ", " + surname + ", " + birthDate + ", " + birthPlace + "]";
+		String passId = "none";
+		if(pass != null) passId = Long.toString(pass.getId());
+		return "Dati utente " + Long.toString(this.getId()) + " [" + name + ", " + surname + ", " + birthDate + ", " + birthPlace + ", Pass id: " + passId + "]";
 	}
 
 }

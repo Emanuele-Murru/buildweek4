@@ -36,5 +36,10 @@ public class ResellerDAO {
 		Reseller ar = em.find(Reseller.class, _id);
 		return ar;
 	}
+	
+	public Reseller findById(long _id) {
+        Reseller ar = em.find(Reseller.class, _id);
+        return ar;
+    }
 
 }

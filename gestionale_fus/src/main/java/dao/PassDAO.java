@@ -78,6 +78,7 @@ public class PassDAO {
 	public void editSubscription(long passId, String type, LocalDate data) {
 		
 		EntityTransaction t = em.getTransaction();
+		t.begin();
 
 			try {
 		        t.begin();

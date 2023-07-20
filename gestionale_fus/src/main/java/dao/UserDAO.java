@@ -2,8 +2,10 @@ package dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import entities.Pass;
 import entities.User;
 
 public class UserDAO {
@@ -52,12 +54,28 @@ public class UserDAO {
 				et.begin();
 				em.remove(du);
 				et.commit();
+				System.out.println("Utente eliminato con successo");
 			} catch (Exception ex) {
 				et.rollback();
 				System.err.println("Errore durante l'eliminazione dell'utente con ID " + _id + ": " + ex.getMessage());
 			}
-
 		} else
 			System.out.println("Utente non trovato");
+	}
+
+	public void assignPass(long userId, Pass pass) {
+
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+
+		Query query = em.createQuery("UPDATE User u SET u.pass = :pass WHERE u.id = :userId");
+		query.setParameter("pass", pass);
+		query.setParameter("userId", userId);
+
+		query.executeUpdate();
+
+		t.commit();
+		
+		System.out.println("Tessera generata e assegnata con successo.");
 	}
 }
