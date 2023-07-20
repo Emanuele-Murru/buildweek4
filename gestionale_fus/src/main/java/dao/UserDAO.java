@@ -2,6 +2,7 @@ package dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entities.Pass;
@@ -48,6 +49,17 @@ public class UserDAO {
 	}
 
 	public void assignPass(long userId, Pass pass) {
+
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+
+		Query query = em.createQuery("UPDATE User u SET u.pass = :pass WHERE u.id = :userId");
+		query.setParameter("pass", pass);
+		query.setParameter("userId", userId);
+
+		int passUpdate = query.executeUpdate();
+
+		t.commit();
 
 	}
 }
