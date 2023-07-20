@@ -51,7 +51,7 @@ public class AuthorizedResellerDAO {
 			}
 		} catch (Exception ex) {
 			et.rollback();
-			System.out.println("Errore durante la rimozione del rivenditore autorizzato:" + ex.getMessage());
+			System.err.println("Errore durante la rimozione del rivenditore autorizzato:" + ex.getMessage());
 		}
 	}
 }
