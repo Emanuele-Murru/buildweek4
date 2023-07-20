@@ -10,6 +10,7 @@ import dao.AuthorizedResellerDAO;
 import dao.AutoResellerDAO;
 import dao.DailyDAO;
 import dao.PassDAO;
+import dao.ResellerDAO;
 import dao.UserDAO;
 import entities.AuthorizedReseller;
 import entities.AutoReseller;
@@ -38,6 +39,7 @@ public class GestionaleFus {
 		
 		// MANAGED ENTITIES-----------------------------------------------------------------
 		
+		ResellerDAO resellerDAO = new ResellerDAO(em);
 		AutoResellerDAO autoResellerDAO = new AutoResellerDAO(em);
 		AuthorizedResellerDAO authorizedResellerDAO = new AuthorizedResellerDAO(em);
 		DailyDAO dailyDAO = new DailyDAO(em);
@@ -105,10 +107,11 @@ public class GestionaleFus {
 										do {
 											System.out.println("Quale operazione vuoi effettuare?");
 											System.out.println("1 - Visualizza i tuoi dati");
-											System.out.println("2 - Verifica validità tessera");
-											System.out.println("3 - Rinnova tessera");
-											System.out.println("4 - Rinnova abbonamento");
-											System.out.println("5 - Elimina profilo\n");
+											System.out.println("2 - Sottoscrivi tessera");
+											System.out.println("3 - Verifica validità tessera");
+											System.out.println("4 - Rinnova tessera");
+											System.out.println("5 - Rinnova abbonamento");
+											System.out.println("6 - Elimina profilo\n");
 											System.out.println("0 - Log Out e torna al menù");
 											
 											c3 = Integer.parseInt(scanner.nextLine());
@@ -122,11 +125,17 @@ public class GestionaleFus {
 														break;
 													case 2:
 														if(_actualUser.getPass() != null)
+															System.out.print("Dove stai creando la tessera: ");
+															long _idReseller = Long.parseLong(scanner.nextLine());
+															userDAO.assignPass(_actualUser.getId(), new Pass(LocalDate.now(), resellerDAO.findById(_idReseller), _actualUser));
+														break;
+													case 3:
+														if(_actualUser.getPass() != null)
 															System.out.println((_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear()) ? "Tessera Valida" : "Tessera scaduta");
 														else
 															System.err.println("Nessuna tessera registrata presso questo utente.");
 														break;
-													case 3:
+													case 4:
 														if(_actualUser.getPass() != null) {
 															if(_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear()){
 																passDAO.renewalPass(passDAO.findPassByUserId(_actualUser));
@@ -136,9 +145,9 @@ public class GestionaleFus {
 															System.err.println("Nessuna tessera registrata presso questo utente.");
 														System.out.println();
 														break;
-													case 4:
-														break;
 													case 5:
+														break;
+													case 6:
 														userDAO.findByIdAndDelete(_actualUser.getId());
 														break;
 													default:
