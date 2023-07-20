@@ -40,6 +40,7 @@ public class UserDAO {
 			et.begin();
 			em.remove(du);
 			et.commit();
+			System.out.println("Utente eliminato con successo");
 
 		} else
 			System.out.println("Utente non trovato");

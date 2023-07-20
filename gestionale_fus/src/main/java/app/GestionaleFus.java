@@ -88,13 +88,23 @@ public class GestionaleFus {
 								break;
 							case 2:
 								System.out.print("Inserire ID utente: ");
-								long _id = Long.parseLong(scanner.nextLine());
+								long _idFind = Long.parseLong(scanner.nextLine());
 								System.out.println();
-								System.out.println(user.findById(_id).toString()); 
+								System.out.println(user.findById(_idFind).toString()); 
 								System.out.println();
 								System.out.print("Premi qualsiasi tasto per tornare al menù");
 								scanner.nextLine();
 								System.out.println("\n");								
+								break;
+							case 3:
+								System.out.print("Inserire ID utente: ");
+								long _idDelete = Long.parseLong(scanner.nextLine());
+								System.out.println();
+								user.findByIdAndDelete(_idDelete); 
+								System.out.println();
+								System.out.print("Premi qualsiasi tasto per tornare al menù");
+								scanner.nextLine();
+								System.out.println("\n");
 								break;
 						}
 					}
