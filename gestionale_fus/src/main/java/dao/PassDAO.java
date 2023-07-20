@@ -75,42 +75,28 @@ public class PassDAO {
 		}
 	}
 
-	public void editSubscription(long id, String type, LocalDate data) {
-		String subTypeString = type;
-		SubscriptionType subType = SubscriptionType.valueOf(subTypeString);
-
-		TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.id = :id", Pass.class);
-
-		Pass pass = query.getResultList().get(0);
-
+	public void editSubscription(long passId, String type, LocalDate data) {
+		
 		EntityTransaction t = em.getTransaction();
 
-		if (pass.getSubType() == null) {
-			t.begin();
-
 			try {
-				Query q = em.createQuery(
-						"UPDATE Pass p SET subType = :subType, expireDateSub = :expireDateSub WHERE p.id = :id");
+		        t.begin();
 
-				q.setParameter("subType", subType);
-				q.setParameter("expireDateSub",
-						subType.equals(SubscriptionType.Weekly) ? data.plusWeeks(1) : data.plusMonths(1));
-				q.setParameter("id", id);
+		        Query query = em.createQuery("UPDATE Pass p SET p.subType = :subType WHERE p.id = :passId");
+		        query.setParameter("subType", SubscriptionType.valueOf(type));
+		        query.setParameter("passId", passId);
 
-				q.executeUpdate();
+		        query.executeUpdate();
 
-				t.commit();
+		        t.commit();
 
-				System.out.printf("Tipo di abbonamento aggiornato con successo a %s.\n", type);
+		        System.out.printf("Abbonamento aggiornato con successo a %s.\n", type);
 
 			} catch (Exception ex) {
 				t.rollback();
 				System.err.println("Errore durante l'aggiornamento del tipo di abbonamento: " + ex.getMessage());
 			}
 
-		} else {
-			System.out.println("Il Pass con ID " + id + " ha già un tipo di abbonamento.");
-		}
 	}
 
 	public void checkSubType(Pass pass) {
