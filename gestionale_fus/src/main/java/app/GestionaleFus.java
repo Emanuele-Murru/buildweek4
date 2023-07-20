@@ -100,17 +100,20 @@ public class GestionaleFus {
 									
 									User _actualUser = userDAO.findById(_idLog);
 									
-									if(_actualUser.getPassword().equals(_passwordLog)) {
+									if(_actualUser != null && _actualUser.getPassword().equals(_passwordLog)) {
 										
 										do {
 											System.out.println("Quale operazione vuoi effettuare?");
 											System.out.println("1 - Visualizza i tuoi dati");
 											System.out.println("2 - Verifica validità tessera");
-											System.out.println("3 - Rinnova abbonamento");
-											System.out.println("4 - Elimina profilo\n");
+											System.out.println("3 - Rinnova tessera");
+											System.out.println("4 - Rinnova abbonamento");
+											System.out.println("5 - Elimina profilo\n");
 											System.out.println("0 - Log Out e torna al menù");
 											
 											c3 = Integer.parseInt(scanner.nextLine());
+											
+											System.out.println();
 											
 											if(c3 != 0) {
 												switch(c3) {
@@ -118,35 +121,76 @@ public class GestionaleFus {
 														System.out.println(_actualUser.toString());
 														break;
 													case 2:
+														if(_actualUser.getPass() != null)
+															System.out.println((_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear()) ? "Tessera Valida" : "Tessera scaduta");
+														else
+															System.err.println("Nessuna tessera registrata presso questo utente.");
 														break;
 													case 3:
-														
+														if(_actualUser.getPass() != null) {
+															if(_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear()){
+																
+															}else
+																System.err.println("Tessera ancora valida, non è necessario rinnovare.");
+														}else
+															System.err.println("Nessuna tessera registrata presso questo utente.");
 														break;
 													case 4:
+														break;
+													case 5:
 														userDAO.findByIdAndDelete(_actualUser.getId());
 														break;
 													default:
 														System.out.println("Comando non valido.");
+															
 												}
 											
-											}else System.err.println("Password errata.");
+											}
+											
+											if(c3 != 4) {
+												System.out.println();
+												System.out.print("Premi invio per effettuare altre operazioni");
+												scanner.nextLine();
+												System.out.println("\n");
+											}else {
+												c3 = 0;
+												System.out.println();
+												System.out.print("Premi invio per tornare al menù /");
+												scanner.nextLine();
+												System.out.println("\n");
+											}
+											
 											
 										}while(c3 != 0);
 										
+									}else {
+										System.err.println("ID o password errati.\n");
+										System.out.print("Premi invio per tornare al menù");
+										scanner.nextLine();
+										System.out.println("\n");
 									}
+									
 								break;
+								
+								default:
+									System.err.println("Comando non valido.");
+									break;
 							}
 							
 						}
 						
-						System.out.println();
-						System.out.print("Premi qualsiasi tasto per tornare al menù");
-						scanner.nextLine();
-						System.out.println("\n");	
 						break;
 				
 					case 2:
 						break;
+					
+					default:
+						System.err.println("Comando non valido.");
+						System.out.println();
+						System.out.print("Premi invio per tornare al menù");
+						scanner.nextLine();
+						System.out.println("\n");
+						break;	
 				}
 			}
 		}while(c1 != 0);
