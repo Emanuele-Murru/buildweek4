@@ -83,7 +83,7 @@ public class PassDAO {
 
 			t.commit();
 
-			System.out.printf("Tipo di abbonamento aggiornato con successo a %s.\n", type);
+			System.out.printf("Abbonamento aggiornato con successo a %s.\n", type);
 
 		}
 	}

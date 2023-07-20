@@ -131,9 +131,9 @@ public class GestionaleFus {
 															userDAO.assignPass(_actualUser.getId(), new Pass(LocalDate.now(), resellerDAO.findById(_idReseller), _actualUser));
 														}else {
 															if(_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear())
-																System.out.println("Tessera già presente e in corso di validità.");
+																System.err.println("Tessera già presente e in corso di validità.");
 															else
-																System.out.println("Tessera già presente, ma scaduta. Effettuare rinnovo.");
+																System.err.println("Tessera già presente, ma scaduta. Effettuare rinnovo.");
 														}
 							
 														break;
@@ -155,6 +155,20 @@ public class GestionaleFus {
 														
 														break;
 													case 5:
+														if(_actualUser.getPass() != null) {
+															if(_actualUser.getPass().getSubType() == null) {
+																System.out.print("Scegliere il tipo di abbonamento da sottoscrivere (Weekly/Monthly): ");
+																String sub = scanner.nextLine();
+																passDAO.editSubscription(_actualUser.getPass().getId(), sub, LocalDate.now());
+																System.out.println();
+															}else {
+																System.err.printf("La tessera presenta un abbonamento %s in corso.\n", _actualUser.getPass().getSubType().toString());
+																System.err.println("Attendere la fine dell'abbonamento corrente per rinnovare.");
+															}
+														}else
+															System.err.println("Nessuna tessera registrata presso questo utente.");
+														
+														
 														break;
 													case 6:
 														userDAO.findByIdAndDelete(_actualUser.getId());
