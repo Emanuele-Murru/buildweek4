@@ -129,11 +129,12 @@ public class GestionaleFus {
 													case 3:
 														if(_actualUser.getPass() != null) {
 															if(_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear()){
-																
+																passDAO.renewalPass(passDAO.findPassByUserId(_actualUser));
 															}else
 																System.err.println("Tessera ancora valida, non è necessario rinnovare.");
 														}else
 															System.err.println("Nessuna tessera registrata presso questo utente.");
+														System.out.println();
 														break;
 													case 4:
 														break;
@@ -147,19 +148,11 @@ public class GestionaleFus {
 											
 											}
 											
-											if(c3 != 4) {
-												System.out.println();
-												System.out.print("Premi invio per effettuare altre operazioni");
-												scanner.nextLine();
-												System.out.println("\n");
-											}else {
-												c3 = 0;
-												System.out.println();
-												System.out.print("Premi invio per tornare al menù /");
-												scanner.nextLine();
-												System.out.println("\n");
-											}
 											
+											System.out.println();
+											System.out.print("Premi invio per effettuare altre operazioni");
+											scanner.nextLine();
+											System.out.println("\n");											
 											
 										}while(c3 != 0);
 										
