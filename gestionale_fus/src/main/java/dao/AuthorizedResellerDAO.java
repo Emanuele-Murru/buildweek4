@@ -27,6 +27,7 @@ public class AuthorizedResellerDAO {
 	}
 
 	public AuthorizedReseller findById(long _id) {
+		
 		try {
 			AuthorizedReseller dar = em.find(AuthorizedReseller.class, _id);
 			return dar;

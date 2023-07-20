@@ -27,15 +27,20 @@ public class VehicleDAO {
 
 		EntityTransaction t = em.getTransaction();
 
-		t.begin();
+		try {
+			t.begin();
 
-		em.persist(vehicle);
+			em.persist(vehicle);
 
-		t.commit();
+			t.commit();
 
-		System.out.println(
-				(vehicle.getType().equals(VehicleType.Bus)) ? "Bus salvato con successo" : "Tram salvato con successo");
+			System.out.println((vehicle.getType().equals(VehicleType.Bus)) ? "Bus salvato con successo"
+					: "Tram salvato con successo");
 
+		} catch (Exception ex) {
+			t.rollback();
+			System.err.println("Errore durante il salvataggio del veicolo: " + ex.getMessage());
+		}
 	}
 
 	public Vehicle findById(long _id) {
@@ -51,15 +56,20 @@ public class VehicleDAO {
 			if (daily.getExpiryDate() != obliterateDate && daily.getExpiryDate().isAfter(obliterateDate)) {
 
 				EntityTransaction t = em.getTransaction();
-				t.begin();
-				Query q = em.createQuery("UPDATE Daily d SET d.obliterateDate = :obliterateDate WHERE d.id = :id");
-				q.setParameter("obliterateDate", obliterateDate);
-				q.setParameter("daily.id", daily.getId());
+				try {
+					t.begin();
+					Query q = em.createQuery("UPDATE Daily d SET d.obliterateDate = :obliterateDate WHERE d.id = :id");
+					q.setParameter("obliterateDate", obliterateDate);
+					q.setParameter("daily.id", daily.getId());
 
-				q.executeUpdate();
+					q.executeUpdate();
 
-				t.commit();
-				System.out.println("Biglietto timbrato con successo");
+					t.commit();
+					System.out.println("Biglietto timbrato con successo");
+				} catch (Exception ex) {
+					t.rollback();
+					System.err.println("Errore durante la validazione del biglietto giornaliero: " + ex.getMessage());
+				}
 
 			} else {
 				System.out.println("Biglietto scaduto");
@@ -74,13 +84,20 @@ public class VehicleDAO {
 	// total obliterated daily ticket
 	public int obliteratedDaily(Vehicle _vehicle) {
 
-		TypedQuery<Ticket> query = em.createQuery(
-				"SELECT t FROM Ticket t WHERE t.vehicle = :_vehicle AND t.dataTimbratura IS NOT NULL", Ticket.class);
-		query.setParameter("_vehicle", _vehicle);
+		try {
+			TypedQuery<Ticket> query = em.createQuery(
+					"SELECT t FROM Ticket t WHERE t.vehicle = :_vehicle AND t.dataTimbratura IS NOT NULL",
+					Ticket.class);
+			query.setParameter("_vehicle", _vehicle);
 
-		List<Ticket> tickets = query.getResultList();
+			List<Ticket> tickets = query.getResultList();
 
-		return tickets.size();
+			return tickets.size();
+			
+		} catch (Exception ex) {
+			System.err.println("Errore durante l'obliterazione del biglietto: " + ex.getMessage());
+			return -1;
+		}
 	}
 
 	// daily ticket between dates
@@ -91,16 +108,28 @@ public class VehicleDAO {
 				Ticket.class).setParameter("_vehicle", _vehicle).setParameter("_startDate", _startDate)
 				.setParameter("_endDate", _endDate);
 
-		List<Ticket> tickets = query.getResultList();
-
-		return tickets.size();
+		try {
+			List<Ticket> tickets = query.getResultList();
+			return tickets.size();
+			
+		} catch (Exception ex) {
+			System.err.println("Errore durante il conteggio dei biglietti giornalieri tra le date " + _startDate + " e "
+					+ _endDate + " : " + ex.getMessage());
+			return -1;
+		}
 
 	}
 
 	// define route
 	public void defineRoute(Vehicle vehicle, Route route) {
-		System.out.println(
-				(vehicle.getRoute() == null) ? "Rotta assegnata con successo" : "Rotta modificata con successo");
-		vehicle.setRoute(route);
+		
+		try {
+			System.out.println(
+					(vehicle.getRoute() == null) ? "Rotta assegnata con successo" : "Rotta modificata con successo");
+			vehicle.setRoute(route);
+			
+		} catch (Exception ex) {
+			System.err.println("Errore durante la definizione della rotta: " + ex.getMessage());
+		}
 	}
 }

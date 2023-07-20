@@ -33,14 +33,14 @@ public class UserDAO {
 
 	// - - - - - - - - - - - - - - - - - - - - findById
 	public User findById(long _id) {
-		User du = null;
 
 		try {
-			du = em.find(User.class, _id);
+			User du = em.find(User.class, _id);
+			return du;
 		} catch (Exception ex) {
 			System.err.println("Errore durante il recupero dell'utente con ID: " + _id + ": " + ex.getMessage());
+			return null;
 		}
-		return du;
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - findByIdAndDelete
