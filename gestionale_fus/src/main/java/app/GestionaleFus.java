@@ -15,15 +15,19 @@ import dao.RouteDAO;
 import dao.TripDAO;
 import dao.UserDAO;
 import dao.VehicleDAO;
+import dao.VehicleStatusUpdateDAO;
 import entities.AuthorizedReseller;
 import entities.AutoReseller;
 import entities.Daily;
 import entities.Pass;
 import entities.Reseller;
 import entities.Route;
+import entities.Trip;
 import entities.User;
 import entities.Vehicle;
+import entities.VehicleStatusUpdate;
 import enums.AutoResellerStatus;
+import enums.VehicleStatus;
 import enums.VehicleType;
 import utils.JpaUtil;
 
@@ -55,7 +59,9 @@ public class GestionaleFus {
 		UserDAO userDAO = new UserDAO(em);
 		PassDAO passDAO = new PassDAO(em);
 		VehicleDAO vehicleDAO = new VehicleDAO(em);
+		VehicleStatusUpdateDAO vehicleStatusUpdateDAO = new VehicleStatusUpdateDAO(em);
 		RouteDAO routeDAO = new RouteDAO(em);
+		TripDAO tripDAO = new TripDAO(em);
 		
 		// MAIN MENU------------------------------------------------------------------------
 		
@@ -353,8 +359,9 @@ public class GestionaleFus {
 									System.out.println("1 - Stampa numero totale biglietti obliterati da un veicolo");
 									System.out.println("2 - Stampa numero totale biglietti obliterati in un periodo");
 									System.out.println("3 - Stampa numero biglietti e abbonamenti di un reseller in un periodo");
-									System.out.println("4 - Manda un veicolo in Servizio/Manutenzione");
-									System.out.println("5 - Percorri tratta con un veicolo");
+									System.out.println("4 - Aggiungi periodo di servizio / manutenzione");
+									System.out.println("5 - Assegna tratta ad un veicolo");
+									System.out.println("6 - Percorri tratta con un veicolo");
 									System.out.println("0 - Torna al menù");
 									
 									dadegi = Integer.parseInt(scanner.nextLine());
@@ -396,8 +403,39 @@ public class GestionaleFus {
 											System.out.println("\n");	
 											break;
 										case 4:
+											System.err.print("Seleziona veicolo da id: ");
+											long _idPippo = Long.parseLong(scanner.nextLine());
+											System.out.print("Specifica tipologia (Service / Maintenance): ");
+											String _t = scanner.nextLine();
+											System.out.print("Inizio periodo: ");
+											String _ss = scanner.nextLine();
+											System.out.print("Fine periodo: ");
+											String _se = scanner.nextLine();
+											System.out.println();
+											vehicleStatusUpdateDAO.save(new VehicleStatusUpdate(vehicleDAO.findById(_idPippo), LocalDate.parse(_ss), LocalDate.parse(_se), VehicleStatus.valueOf(_t)));											
+											System.out.println();
 											break;
 										case 5:
+											System.out.print("Inserisci id veicolo: ");
+											long _idPaperino = Long.parseLong(scanner.nextLine());
+											System.out.print("Inserisci nome tratta: ");
+											String _nRoute = scanner.nextLine();
+											System.out.println();
+											vehicleDAO.defineRoute(vehicleDAO.findById(_idPaperino), routeDAO.findByName(_nRoute));
+											System.out.println();
+											break;
+										case 6:
+											System.out.print("Inserisci id veicolo: ");
+											long _idPluto = Long.parseLong(scanner.nextLine());
+											System.out.print("Tempo di percorrenza: ");
+											int _tp = Integer.parseInt(scanner.nextLine());
+											System.out.println();
+											tripDAO.save(new Trip(vehicleDAO.findById(_idPluto), _tp));
+											System.out.println();
+											routeDAO.avgUpdate(vehicleDAO.findById(_idPluto).getRoute()); 
+											break;
+										default:
+											System.err.println("Comando non valido.");
 											break;
 										
 									}

@@ -1,10 +1,15 @@
 package dao;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entities.Route;
+import entities.Trip;
 
 public class RouteDAO {
 
@@ -35,5 +40,34 @@ public class RouteDAO {
 			System.err.println("Errore durante la ricerca del percorso: " + ex.getMessage());
 			return null;
 		}
+	}
+	
+	public void avgUpdate(Route route) {
+		
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		
+		TypedQuery<Trip> queryTrip = em.createQuery("SELECT t FROM Trip t WHERE routeName = :routeName", Trip.class);
+		queryTrip.setParameter("routeName", route.getRouteName());
+		
+		List<Trip> trips = queryTrip.getResultList();
+		
+		int c = 0;
+		int sum = 0;
+		
+		for(Trip tr: trips) {
+			c++;
+			sum += tr.getTripTime();
+		}
+		
+		double avg = sum / c;
+		
+		Query q = em.createQuery("UPDATE Route r SET avgTime = :avgTime WHERE routeName = :routeName");
+		q.setParameter("avgTime", avg);
+		q.setParameter("routeName", route.getRouteName());
+
+		q.executeUpdate();
+
+		t.commit();
 	}
 }

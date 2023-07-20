@@ -21,7 +21,7 @@ public class Route {
 
 	private String start;
 	private String terminal;
-	private int avgTime = 0;
+	private double avgTime = 0;
 
 	@OneToMany(mappedBy = "route")
 	private Set<Vehicle> vehicles;
