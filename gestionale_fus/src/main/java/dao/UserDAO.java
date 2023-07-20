@@ -60,6 +60,7 @@ public class UserDAO {
 		query.executeUpdate();
 
 		t.commit();
-
+		
+		System.out.println("Tessera generata e assegnata con successo.");
 	}
 }

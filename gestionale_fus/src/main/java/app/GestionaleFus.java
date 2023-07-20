@@ -124,10 +124,17 @@ public class GestionaleFus {
 														System.out.println(_actualUser.toString());
 														break;
 													case 2:
-														if(_actualUser.getPass() != null)
+														if(_actualUser.getPass() == null) {
 															System.out.print("Dove stai creando la tessera: ");
 															long _idReseller = Long.parseLong(scanner.nextLine());
 															userDAO.assignPass(_actualUser.getId(), new Pass(LocalDate.now(), resellerDAO.findById(_idReseller), _actualUser));
+														}else {
+															if(_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear())
+																System.out.println("Tessera già presente e in corso di validità.");
+															else
+																System.out.println("Tessera già presente, ma scaduta. Effettuare rinnovo.");
+														}
+							
 														break;
 													case 3:
 														if(_actualUser.getPass() != null)
