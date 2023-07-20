@@ -30,13 +30,6 @@ public class Trip {
 		this.tripTime = tripTime;
 	}
 
-	// * * * * * * * * * * * * * * * trip constructor with route
-	public Trip(Vehicle vehicle, Route route, int tripTime) {
-		this.idVehicle = vehicle.getId();
-		this.routeName = route.getRouteName();
-		this.tripTime = tripTime;
-	}
-
 	@Override
 	public String toString() {
 		return "Trip [id=" + id + ", idVehicle=" + idVehicle + ", routeName=" + routeName + ", tripTime=" + tripTime

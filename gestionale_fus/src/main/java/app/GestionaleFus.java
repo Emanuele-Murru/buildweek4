@@ -16,8 +16,11 @@ import dao.TripDAO;
 import dao.UserDAO;
 import dao.VehicleDAO;
 import entities.AuthorizedReseller;
+import entities.AutoReseller;
+import entities.Daily;
 import entities.Pass;
 import entities.User;
+import enums.AutoResellerStatus;
 import utils.JpaUtil;
 
 public class GestionaleFus {
@@ -36,6 +39,8 @@ public class GestionaleFus {
 		int c1 = 0;
 		int c2 = 0;
 		int c3 = 0;
+		int c4 = 0;
+		int c5 = 0;
 		
 		// MANAGED ENTITIES-----------------------------------------------------------------
 		
@@ -200,6 +205,9 @@ public class GestionaleFus {
 								
 								case 3:
 									// ---------------------------------------------------------------CREATE DAILY TICKET
+									System.out.print("Dove stai creando il biglietto: ");
+									long _idReseller = Long.parseLong(scanner.nextLine());
+									dailyDAO.createDailyTicket(new Daily(LocalDate.now(), resellerDAO.findById(_idReseller)));
 									break;
 								
 								default:
@@ -212,6 +220,74 @@ public class GestionaleFus {
 						break;
 				
 					case 2:
+						System.out.println("Scegli sezione");
+						System.out.println("1 - Creazione");
+						System.out.println("2 - Gestione");
+						System.out.println("0 - Torna al menù");
+						
+						c4 = Integer.parseInt(scanner.nextLine());
+						
+						System.out.println();
+						switch(c4) {
+							case 1:
+								System.out.println("Quale operazione vuoi effettuare?");
+								System.out.println("1 - Crea reseller");
+								System.out.println("2 - Crea mezzo");
+								System.out.println("3 - Creare tratta");
+								
+								c5 = Integer.parseInt(scanner.nextLine());
+								
+								System.out.println();
+								switch(c5) {
+									case 1:
+										int i = 0;
+
+										System.out.println("Scegliere tipologia reseller");
+										System.out.println("1 - Automatico");
+										System.out.println("2 - Autorizzato");
+										
+										i = Integer.parseInt(scanner.nextLine());
+										
+										System.out.println();
+										
+										switch(i) {
+											case 1:
+												System.out.print("Definire il nome del reseller: ");
+												String _autoResellerName = scanner.nextLine();
+												System.out.println();
+												autoResellerDAO.save(new AutoReseller(_autoResellerName, AutoResellerStatus.ACTIVE));
+												System.out.println();
+												break;
+											case 2:
+												System.out.print("Definire il nome del reseller: ");
+												String _resellerName = scanner.nextLine();
+												System.out.println();
+												authorizedResellerDAO.save(new AuthorizedReseller(_resellerName));
+												System.out.println();
+												break;
+										}
+										System.out.println();
+										System.out.print("Premi invio per effettuare altre operazioni");
+										scanner.nextLine();
+										System.out.println("\n");	
+										break;
+									case 2:
+										break;
+									case 3:
+										break;
+									default:
+										System.err.println("Comando non valido.");
+										break;
+								}
+								
+								break;
+							case 2:
+								
+								break;
+							default:
+								System.err.println("Comando non valido.");
+								break;
+						}
 						break;
 					
 					default:
