@@ -1,11 +1,14 @@
 package dao;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import entities.Daily;
-import entities.Vehicle;
+import entities.Ticket;
 
 public class DailyDAO {
 	private final EntityManager em;
@@ -37,5 +40,25 @@ public class DailyDAO {
 	public Daily findById(long _id) {
 		Daily d = em.find(Daily.class, _id);
 		return d;
+	}
+	
+	public int getTicketObliterated(LocalDate s, LocalDate e) {
+		EntityTransaction t = em.getTransaction();
+
+		try {
+						
+			TypedQuery<Ticket> query = em.createQuery("SELECT t FROM Ticket t WHERE obliterateDate BETWEEN :d1 AND :d2 AND obliterateDate IS NOT NULL",Ticket.class);
+			query.setParameter("d1", s);
+			query.setParameter("d2", e);
+
+			List<Ticket> tickets = query.getResultList();
+
+			return tickets.size();
+			
+		} catch (Exception ex) {
+			t.rollback();
+			System.err.println("Errore durante l'estrazione dei dati" + ex.getMessage());
+			return 0;
+		}
 	}
 }

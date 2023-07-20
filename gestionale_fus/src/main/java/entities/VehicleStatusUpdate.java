@@ -25,8 +25,8 @@ public class VehicleStatusUpdate {
 	private long id;
 
 	@ManyToOne
-	// @JoinColumn(name = "VehicleStatusUpdate_id")
 	private Vehicle vehicle;
+	
 	private LocalDate startDate;
 	private LocalDate endDate;
 

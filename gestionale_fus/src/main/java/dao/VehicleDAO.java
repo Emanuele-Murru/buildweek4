@@ -88,17 +88,17 @@ public class VehicleDAO {
 
 		try {
 			TypedQuery<Ticket> query = em.createQuery(
-					"SELECT t FROM Ticket t WHERE t.vehicle = :_vehicle AND t.dataTimbratura IS NOT NULL",
+					"SELECT t FROM Ticket t WHERE vehicle_id = :_vehicle AND obliterateDate IS NOT NULL",
 					Ticket.class);
-			query.setParameter("_vehicle", _vehicle);
+			query.setParameter("_vehicle", _vehicle.getId());
 
 			List<Ticket> tickets = query.getResultList();
 
 			return tickets.size();
 			
 		} catch (Exception ex) {
-			System.err.println("Errore durante l'obliterazione del biglietto: " + ex.getMessage());
-			return -1;
+			System.err.println("Errore nell'estrazione del numero biglietti: " + ex.getMessage());
+			return 0;
 		}
 	}
 

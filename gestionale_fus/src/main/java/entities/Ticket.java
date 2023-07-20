@@ -30,9 +30,6 @@ public abstract class Ticket {
 	@ManyToOne
 	private Reseller reseller;
 
-	@ManyToOne
-	private Vehicle vehicle;
-
 	public Ticket(LocalDate _issueDate, Reseller _reseller) {
 		this.issueDate = _issueDate;
 		this.reseller = _reseller;

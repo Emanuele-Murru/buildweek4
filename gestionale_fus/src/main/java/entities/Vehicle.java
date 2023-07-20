@@ -30,7 +30,7 @@ public class Vehicle {
 	private VehicleType type;
 
 	@OneToMany
-	private Set<Ticket> tickets;
+	private Set<Daily> dailies;
 
 	@OneToMany
 	private Set<VehicleStatusUpdate> history;

@@ -363,13 +363,20 @@ public class GestionaleFus {
 									
 									switch(dadegi) {
 										case 1:
-											System.out.println("Inserisci id veicolo: ");
+											System.out.print("Inserisci id veicolo: ");
 											long _idVehicle = Long.parseLong(scanner.nextLine());
 											System.out.println();
 											System.out.printf("Biglietti emessi dal veicolo selezionato: %d\n", vehicleDAO.obliteratedDaily(vehicleDAO.findById(_idVehicle)));
 											System.out.println();
 											break;
 										case 2:
+											System.out.print("Inserire data di inizio (yyyy-mm-dd): ");
+											String _s = scanner.nextLine();
+											System.out.print("Inserire data di fine (yyyy-mm-dd): ");
+											String _e = scanner.nextLine();
+											System.out.println();
+											System.out.printf("Biglietti emessi nel periodo selezionato: %d\n", dailyDAO.getTicketObliterated(LocalDate.parse(_s), LocalDate.parse(_e)));
+											System.out.println();
 											break;
 										case 3:
 											System.out.print("Seleziona reseller: ");
