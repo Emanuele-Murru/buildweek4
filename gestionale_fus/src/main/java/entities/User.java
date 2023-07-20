@@ -32,10 +32,12 @@ public class User {
 
 	protected LocalDate birthDate;
 	protected String birthPlace;
+	protected String password;
 
-	public User(String _name, String _surname, LocalDate _birthDate, String _birthPlace) {
+	public User(String _name, String _surname, String _password, LocalDate _birthDate, String _birthPlace) {
 		this.name = _name;
 		this.surname = _surname;
+		this.password = _password;
 		this.birthDate = _birthDate;
 		this.birthPlace = _birthPlace;
 	}
