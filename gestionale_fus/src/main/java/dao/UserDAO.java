@@ -68,14 +68,14 @@ public class UserDAO {
 		EntityTransaction t = em.getTransaction();
 		t.begin();
 
-		Query query = em.createQuery("UPDATE User u SET u.pass = :pass WHERE u.id = :userId");
+		Query query = em.createQuery("UPDATE User u SET u.pass = :pass WHERE u.id = :id");
 		query.setParameter("pass", pass);
-		query.setParameter("userId", userId);
+		query.setParameter("id", userId);
 
 		query.executeUpdate();
 
 		t.commit();
 		
-		System.out.println("Tessera generata e assegnata con successo.");
+		System.out.println("Tessera assegnata con successo all'utente.");
 	}
 }

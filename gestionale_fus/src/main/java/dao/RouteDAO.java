@@ -2,6 +2,7 @@ package dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import entities.Route;
 
@@ -13,13 +14,14 @@ public class RouteDAO {
 		this.em = _entityManager;
 	}
 
-	public void save(Route route) {
+	public void saveRoute(Route route) {
 		EntityTransaction et = em.getTransaction();
 		try {
 			et.begin();
 			em.persist(route);
 			et.commit();
-			System.out.println("Utente salvato correttamente");
+			
+			System.out.printf("La tratta %s è stata creata.\n", route.getRouteName());
 		} catch (Exception ex) {
 			et.rollback();
 		}

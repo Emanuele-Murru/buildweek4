@@ -18,7 +18,7 @@ public class PassDAO {
 		this.em = em;
 	}
 
-	public void createPassTicket(Pass e) {
+	public void savePass(Pass e) {
 		EntityTransaction t = em.getTransaction();
 
 		try {
@@ -27,17 +27,30 @@ public class PassDAO {
 			em.persist(e);
 
 			t.commit();
-			System.out.println("Tessera creato/salvato con successo");
+			TypedQuery<Long> query = em.createQuery("SELECT MAX (id) FROM Ticket", Long.class);
+			long id = query.getSingleResult();
+			System.out.printf("Tessera creata con id: %d\n",  id);
 		} catch (Exception ex) {
 			t.rollback();
 			System.err.println("Errore durante la creazione della tessera: " + ex.getMessage());
 		}
 	}
+	
+	public Pass findById(long _id) {
+
+		try {
+			Pass pass = em.find(Pass.class, _id);
+			return pass;
+		} catch (Exception ex) {
+			System.err.println("Errore durante il recupero dell'utente con ID: " + _id + ": " + ex.getMessage());
+			return null;
+		}
+	}
 
 	public Pass findPassByUserId(User user) {
 		try {
-			TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.user.id = :user.id", Pass.class);
-			query.setParameter("user", user);
+			TypedQuery<Pass> query = em.createQuery("SELECT p FROM Pass p WHERE p.user.id = :id", Pass.class);
+			query.setParameter("id", user.getId());
 			return query.getSingleResult();
 		} catch (Exception e) {
 			System.out.println("Errore durante la ricerca della tessera per l'utente: " + e.getMessage());

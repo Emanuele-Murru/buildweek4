@@ -19,6 +19,8 @@ import entities.AuthorizedReseller;
 import entities.AutoReseller;
 import entities.Daily;
 import entities.Pass;
+import entities.Reseller;
+import entities.Route;
 import entities.User;
 import entities.Vehicle;
 import enums.AutoResellerStatus;
@@ -53,6 +55,7 @@ public class GestionaleFus {
 		UserDAO userDAO = new UserDAO(em);
 		PassDAO passDAO = new PassDAO(em);
 		VehicleDAO vehicleDAO = new VehicleDAO(em);
+		RouteDAO routeDAO = new RouteDAO(em);
 		
 		// MAIN MENU------------------------------------------------------------------------
 		
@@ -136,7 +139,14 @@ public class GestionaleFus {
 														if(_actualUser.getPass() == null) {
 															System.out.print("Dove stai creando la tessera: ");
 															long _idReseller = Long.parseLong(scanner.nextLine());
-															userDAO.assignPass(_actualUser.getId(), new Pass(LocalDate.now(), resellerDAO.findById(_idReseller), _actualUser));
+															System.out.println();
+															// pass creation
+															Pass localPass = new Pass(LocalDate.now(), resellerDAO.findById(_idReseller), _actualUser);
+															passDAO.savePass(localPass);
+															System.out.println();
+															// assign to user
+															userDAO.assignPass(_actualUser.getId(), passDAO.findById(localPass.getId()));
+															System.out.println();
 														}else {
 															if(_actualUser.getPass().getExpiryDatePass().getYear() == LocalDate.now().getYear())
 																System.err.println("Tessera già presente e in corso di validità.");
@@ -309,6 +319,15 @@ public class GestionaleFus {
 										System.out.println("\n");
 										break;
 									case 3:
+										System.out.print("Inserire nome rotta: ");
+										String routeName = scanner.nextLine();
+										System.out.print("Inserire inizio tratta: ");
+										String startName = scanner.nextLine();
+										System.out.print("Inserire fine tratta: ");
+										String terminalName = scanner.nextLine();
+										System.out.println();
+										routeDAO.saveRoute(new Route(routeName, startName, terminalName));
+										System.out.println();
 										break;
 									default:
 										System.err.println("Comando non valido.");
@@ -317,7 +336,16 @@ public class GestionaleFus {
 								
 								break;
 							case 2:
+								System.out.println("Quale operazione vuoi effettuare?");
+								System.out.println("1 - Stampa numero totale biglietti e abbonamenti emessi di un reseller");
+								System.out.println("2 - Stampa numero biglietti e abbonamenti di un reseller in un periodo");
+								System.out.println("3 - Attiva/Disattiva un rivenditore automatico");
+								System.out.println("4 - ");
 								
+								
+								c5 = Integer.parseInt(scanner.nextLine());
+								
+								System.out.println();
 								break;
 							default:
 								System.err.println("Comando non valido.");
