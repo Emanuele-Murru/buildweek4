@@ -38,11 +38,18 @@ public class Vehicle {
 	private int capacity;
 
 	@ManyToOne
-	private Route route = null;
+	private Route route;
 
 	public Vehicle(VehicleType type) {
 		this.capacity = (type.equals(VehicleType.Bus)) ? 30 : 50;
 		this.type = type;
 	}
 
+	@Override
+	public String toString() {
+		return "Vehicle [id=" + id + ", type=" + type + ", dailies=" + dailies + ", history=" + history + ", capacity="
+				+ capacity + ", route=" + route + "]";
+	}
+
+	
 }

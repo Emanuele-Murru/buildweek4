@@ -237,9 +237,7 @@ public class GestionaleFus {
 									System.out.println("\n");
 									break;
 								
-								default:
-									System.err.println("Comando non valido.");
-									break;
+								
 								case 4:
 									System.out.print("Inserire id biglietto da validare: ");
 									long _idDaily = Long.parseLong(scanner.nextLine());
@@ -248,6 +246,9 @@ public class GestionaleFus {
 									long _idV = Long.parseLong(scanner.nextLine());
 									vehicleDAO.validateDaily(dailyDAO.findById(_idDaily), vehicleDAO.findById(_idV), LocalDate.now());
 									System.out.println();
+									break;
+								default:
+									System.err.println("Comando non valido.");
 									break;
 							}
 							
@@ -403,7 +404,7 @@ public class GestionaleFus {
 											System.out.println("\n");	
 											break;
 										case 4:
-											System.err.print("Seleziona veicolo da id: ");
+											System.out.print("Seleziona veicolo da id: ");
 											long _idPippo = Long.parseLong(scanner.nextLine());
 											System.out.print("Specifica tipologia (Service / Maintenance): ");
 											String _t = scanner.nextLine();
